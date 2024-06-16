@@ -10,41 +10,28 @@
  * };
  */
 class Solution {
-
-	int ret = 0;
-
-	pair<int, bool> dfs(TreeNode* root, bool isLeft)
-	{
-		if (!root)
-		{
-			return { 0 , false };
-		}
-
-
-		auto lp = dfs(root->left, true);
-		auto rp = dfs(root->right, false);
-
-		if (isLeft)
-		{
-			ret = max(ret, rp.first + 1);
-
-			return { rp.first + 1, false };
-		}
-		else
-		{
-			ret = max(ret, lp.first + 1);
-
-			return { lp.first + 1, true };
-		}
-	}
-
-
 public:
-	int longestZigZag(TreeNode* root) {
+    int pathLength = 0;
+    void dfs(TreeNode* node, bool goLeft, int steps) {
+        if (node == nullptr) {
+            return;
+        }
+        pathLength = max(pathLength, steps);
+        if (goLeft) {
+            dfs(node->left, false, steps + 1);
+            dfs(node->right, true, 1);
+        }
+        else {
+            dfs(node->left, false, 1);
+            dfs(node->right, true, steps + 1);
+        }
+    }
 
-		dfs(root->left, true);
-		dfs(root->right, true);
-
-		return ret;
-	}
+    int longestZigZag(TreeNode* root) {
+        dfs(root->left, false, 1);
+        dfs(root->right, true, 1);
+        return pathLength;
+    }
 };
+
+//https://leetcode.com/problems/longest-zigzag-path-in-a-binary-tree/?envType=study-plan-v2&envId=leetcode-75
