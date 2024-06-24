@@ -47,3 +47,39 @@ public:
 		return ret;
 	}
 };
+
+class Solution {
+
+	int ret = 0;
+
+	void dfs(int index, int parent, vector<vector<pair<int, int>>>& g)
+	{
+		for(const auto& [node, sign] : g[index])
+		{ 
+			if (parent != node)
+			{
+				ret += sign;
+				dfs(node, index, g);
+			}
+		}
+	}
+
+
+public:
+	int minReorder(int n, vector<vector<int>>& connections) {
+
+		vector<vector<pair<int,int>>> g(n);
+
+		for (const auto& p : connections)
+		{
+			g[p[0]].push_back({ p[1], 1 });
+			g[p[1]].push_back({ p[0], 0 });
+		}
+
+		dfs(0, -1, g);
+
+		return ret;
+	}
+};
+
+//leetcode.com/problems/reorder-routes-to-make-all-paths-lead-to-the-city-zero/editorial/?envType=study-plan-v2&envId=leetcode-75
