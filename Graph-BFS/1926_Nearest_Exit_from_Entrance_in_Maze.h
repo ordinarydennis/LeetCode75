@@ -63,3 +63,68 @@ public:
 		return ret == INT_MAX ? -1 : ret;
 	}
 };
+
+
+class Solution {
+public:
+	int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
+
+		queue<array<int, 3>> q;
+
+		q.push({ entrance[0] , entrance[1] , 0});
+
+		maze[entrance[0]][entrance[1]] = '+';
+
+		vector<pair<int, int>> dir = {
+			{ -1,  0 },
+			{  1,  0 },
+			{  0,  1 },
+			{  0, -1 },
+		};
+
+		while (q.size())
+		{
+			auto pos = q.front();
+
+			q.pop();
+
+			for (auto& pa : dir)
+			{
+				auto y = pos[0] + pa.first;
+				auto x = pos[1] + pa.second;
+				auto d = pos[2] + 1;
+
+				if (y < 0 || maze.size() <= y)
+				{
+					continue;
+				}
+
+				if (x < 0 || maze[0].size() <= x)
+				{
+					continue;
+				}
+
+				if ('+' == maze[y][x])
+				{
+					continue;
+				}
+				
+				if (0 == y || maze.size() - 1 == y)
+				{
+					return d;
+				}
+
+				if (0 == x || maze[0].size() - 1 == x)
+				{
+					return d;
+				}
+
+				maze[y][x] = '+';
+
+				q.push( { y, x, d } );
+			}
+		}
+
+		return -1;
+	}
+};
