@@ -48,3 +48,45 @@ public:
 		return -q.top();
 	}
 };
+
+class Solution {
+public:
+	int findKthLargest(vector<int>& nums, int k) {
+
+		sort(nums.begin(), nums.end(), std::greater<int>());
+
+		auto it = nums.begin();
+
+		while (--k) ++it;
+
+		return *it;
+	}
+};
+
+
+class Solution {
+public:
+	int findKthLargest(vector<int>& nums, int k) {
+
+		sort(nums.begin(), nums.end(), std::greater<int>());
+
+		return nums[k - 1];
+	}
+
+};
+class Solution {
+public:
+	int findKthLargest(vector<int>& nums, int k) {
+
+		priority_queue<int, vector<int>, std::greater<int>> q;
+
+		for (int n : nums)
+		{
+			q.push(n);
+
+			if (k < q.size()) q.pop();
+		}
+
+		return q.top();
+	}
+};
