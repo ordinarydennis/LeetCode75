@@ -100,3 +100,118 @@ private:
 	TrieObj* root;
 
 };
+
+
+class Trie {
+
+private:
+	struct Node
+	{
+		vector<Node*> childList;
+		bool isEnd = false;
+
+		Node()
+			: childList('z' - 'a' + 1, nullptr),
+			isEnd(false)
+		{
+
+		}
+
+		Node* GetChild(char c)
+		{
+			return childList[GetCharToIndex(c)];
+		}
+
+		void AddChild(char c, Node* child)
+		{
+			childList[GetCharToIndex(c)] = child;
+		}
+
+		void SetEnd() { isEnd = true; };
+
+		bool IsEnd() { return isEnd; };
+
+	private:
+		int GetCharToIndex(char c) { return c - 'a'; }
+
+	};
+
+
+
+public:
+	Trie() {
+		root = new Node();
+	}
+
+	void insert(string word) {
+
+		Node* node = root;
+
+		for (char c : word)
+		{
+			auto* childNode = node->GetChild(c);
+
+			if (nullptr == childNode)
+			{
+				childNode = new Node();
+				node->AddChild(c, childNode);
+			}
+
+			node = childNode;
+		}
+
+		node->SetEnd();
+	}
+
+	bool search(string word) {
+
+		auto* node = findNode(word);
+
+		return node && node->IsEnd();
+	}
+
+	bool startsWith(string prefix) {
+
+		Node* node = findNode(prefix);
+
+		return (nullptr != node);
+	}
+
+
+private:
+	Node* findNode(string prefix) {
+
+		Node* node = root;
+
+		for (char c : prefix)
+		{
+			auto* childNode = node->GetChild(c);
+
+			if (nullptr == childNode)
+			{
+				return nullptr;
+			}
+
+			node = childNode;
+		}
+
+		return node;
+	}
+
+private:
+	Node* root = nullptr;
+
+};
+
+
+//Space Complexity O(ALPHABET_SIZE ¡¿ L¡¿ N)
+//https://www.quora.com/What-is-the-complexity-of-Trie
+
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
