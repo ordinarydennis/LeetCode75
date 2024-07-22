@@ -1,0 +1,33 @@
+class Solution {
+public:
+	int findMinArrowShots(vector<vector<int>>& points) {
+
+		sort(points.begin(), points.end(), [](vector<int>& l, vector<int>& r)
+			{
+				return l[1] < r[1];
+			}
+		);
+
+		int k = points[0][1];
+
+		int ret = 1;
+
+		for (int i = 1; i < points.size(); i++)
+		{
+			if (k >= points[i][0])
+			{
+				continue;
+			}
+			else
+			{
+				ret++;
+				k = points[i][1];
+			}
+
+		}
+
+		return ret;
+	}
+};
+
+//When you want to know if it's overlapping, you need to sort the list of locations as end points
