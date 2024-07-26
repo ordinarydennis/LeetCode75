@@ -232,3 +232,140 @@ public:
 };
 
 //https://leetcode.com/problems/search-suggestions-system/editorial/?envType=study-plan-v2&envId=leetcode-75
+
+
+class Solution {
+
+
+private:
+	struct Node
+	{
+		Node() :
+			list('z' - 'a' + 1),
+			isEnd(false)
+		{
+
+		}
+
+
+	private:
+		vector<Node*> list;
+		bool isEnd;
+	};
+
+
+public:
+	void insertWord(string& str)
+	{
+		auto* cur = root;
+
+		for (int i = 0; i < str.size(); i++)
+		{
+			auto* child = cur->list[str[i] - 'a'];
+
+			if (nullptr == child)
+			{
+				child = new Node();
+				cur->list[str[i] - 'a'] = child;
+			}
+			cur = child;
+		}
+
+		cur->isEnd = true;
+	}
+
+	Node* findPrefixWord(string& str)
+	{
+		auto* cur = root;
+
+		for (int i = 0; i < str.size(); i++)
+		{
+			auto* child = cur->list[str[i] - 'a'];
+
+			if (nullptr == child)
+			{
+				return nullptr;
+			}
+
+			cur = child;
+		}
+
+		return cur;
+	}
+
+	void findPrefixWord(Node* node, string& str, vector<string>& strList)
+	{
+		if (3 <= strList.size())
+		{
+			return;
+		}
+
+		if (node->isEnd)
+		{
+			strList.push_back(str);
+			return;
+		}
+
+		auto child = node->list;
+
+		for (int i = 0; i< child.size(); i++)
+		{
+			if (nullptr == child[i])
+			{
+				continue;
+			}
+
+			str += i + 'a';
+
+			findPrefixWord(child[i], str, strList);
+
+			str.pop_back();
+			
+		}
+
+
+		return cur;
+	}
+
+public:
+	vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
+
+		root = new Node();
+
+		sort(products.begin(), products.end());
+
+		for (auto str : products)
+		{
+			root->insertWord(str);
+		}
+
+
+		vector<vector<string>> ret;
+
+		string word;
+
+		for (int i = 0; i < searchWord.size(); i++)
+		{
+			word.push_back(searchWord[i]);
+
+			auto* node = findPrefixWord(word);
+
+			if (nullptr == node)
+			{
+				continue;
+			}
+
+			vector<string> words;
+
+			findPrefixWord(node, words);
+
+			ret.push_back(words);
+		}
+	}
+
+
+private:
+	Node* root;
+
+
+};
