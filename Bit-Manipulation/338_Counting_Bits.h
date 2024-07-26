@@ -67,3 +67,28 @@ public:
 		return ret;
 	}
 };
+
+class Solution {
+public:
+	vector<int> countBits(int n) {
+
+		vector<int> ret(n + 1, 0); 
+
+		for (int i = 1; i <= n; i++)
+		{
+			int num = i;
+
+			int c = 0;
+
+			while (num)
+			{
+				num = num & (num - 1);
+				c++;
+			}
+
+			ret[i] = c;
+		}
+
+		return ret;
+	}
+};

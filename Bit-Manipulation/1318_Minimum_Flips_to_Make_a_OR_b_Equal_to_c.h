@@ -38,3 +38,33 @@ public:
 
 	}
 };
+
+class Solution {
+public:
+	int minFlips(int a, int b, int c) {
+
+		int ret = 0;
+
+		while(a || b || c)
+		{
+			if (c & 1)
+			{
+				if (0 == (a & 1) && 0 == (b & 1))
+				{
+					ret++;
+				}
+			}
+			else
+			{
+				ret += (a & 1);
+				ret += (b & 1);
+			}
+			
+			a = a >> 1;
+			b = b >> 1;
+			c = c >> 1;
+		}
+
+		return ret;
+	}
+};
