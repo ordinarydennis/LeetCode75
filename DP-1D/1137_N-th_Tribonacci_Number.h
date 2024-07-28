@@ -46,3 +46,74 @@ public:
 		return dfs(n);
 	}
 };
+
+class Solution {
+
+	int dfs(int n)
+	{
+		if (-1 != memo[n])
+		{
+			return memo[n];
+		}
+
+		if (0 == n)
+		{
+			return 0;
+		}
+
+		if (n == 1 || n == 2)
+		{
+			return 1;
+		}
+
+		memo[n] = dfs(n - 1) + dfs(n - 2) + dfs(n - 3);
+
+		return memo[n];
+
+	}
+
+
+	vector<int> memo;
+
+public:
+	int tribonacci(int n) {
+
+		memo.resize(n + 1, -1);
+
+		return dfs(n);
+
+	}
+};
+
+
+class Solution {
+
+
+public:
+	int tribonacci(int n) {
+
+		if (n == 0)
+			return 0;
+
+		if (n <= 2)
+			return 1;
+
+		int ret = 0;
+
+		int a = 0;
+		int b = 1;
+		int c = 1;
+
+		for (int i = 3; i <= n; i++)
+		{
+			ret = a + b + c;
+
+			a = b;
+			b = c;
+			c = ret;
+		}
+
+
+		return ret;
+	}
+};
