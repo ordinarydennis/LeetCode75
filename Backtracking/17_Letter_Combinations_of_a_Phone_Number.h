@@ -52,3 +52,58 @@ public:
 
 	}
 };
+
+
+
+class Solution {
+
+	void dfs(vector<vector<char>>& phone, string& digits, int index, string& result)
+	{
+		if (digits.size() <= index)
+		{
+			ret.push_back(result);
+			return;
+		}
+
+		auto list = phone[digits[index] - '0'];
+
+		for (int i = 0; i < list.size(); i++)
+		{
+			result.push_back(list[i]);
+
+			dfs(phone, digits, index + 1, result);
+
+			result.pop_back();
+		}
+	}
+
+	vector<string> ret;
+
+public:
+	vector<string> letterCombinations(string digits) {
+
+		if (0 == digits.size())
+		{
+			return {};
+		}
+
+		vector<vector<char>> phone = {
+			{' '},
+			{' '},
+			{'a', 'b', 'c'},
+			{'d', 'e', 'f'},
+			{'g', 'h', 'i'},
+			{'j', 'k', 'l'},
+			{'m', 'n', 'o'},
+			{'p', 'q', 'r', 's'},
+			{'t', 'u', 'v'},
+			{'w', 'x', 'y','z'},
+		};
+
+		string result;
+
+		dfs(phone, digits, 0, result);
+
+		return ret;
+	}
+};
