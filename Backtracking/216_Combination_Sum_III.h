@@ -46,3 +46,87 @@ public:
 	}
 };
 
+
+
+class Solution {
+
+	void dfs(int k, int n,  vector<bool> &visit, vector<int>& list)
+	{
+		if (0 == k)
+		{
+			if (n == accumulate(list.begin(), list.end(), 0))
+			{
+				std::sort(list.begin(), list.end());
+
+				auto it = find(ret.begin(), ret.end(), list);
+
+				if(it == ret.end())
+					ret.push_back(list);
+			}
+
+			return;
+		}
+
+		for (int i = 1; i < 10; i++)
+		{
+			//if(n < accumulate(list.begin(), list.end(), 0) + i)
+			//{
+			//	break;
+			//}
+
+			if (visit[i])
+			{
+				continue;
+			}
+
+			//if (list.end() != find(list.begin(), list.end(), i))
+			//{
+			//	continue;
+			//}
+
+
+			visit[i] = true;
+
+			list.push_back(i);
+
+			dfs(k - 1, n, visit, list);
+
+			list.pop_back();
+
+			visit[i] = false;
+		}
+	}
+
+	vector<vector<int>> ret;
+
+	vector<bool> visit;
+
+public:
+	vector<vector<int>> combinationSum3(int k, int n) {
+
+		visit.resize(10, false);
+
+		vector<int> list;
+
+		dfs(k, n, visit, list);
+
+		return ret;
+	}
+};
+
+Input: k = 3, n = 7
+Output : [[1, 2, 4]]
+	Explanation :
+		1 + 2 + 4 = 7
+		There are no other valid combinations.
+
+
+
+		k =
+		3
+		n =
+		7
+		Output
+		[[1, 2, 4], [1, 2, 3]]
+		Expected
+		[[1, 2, 4]]
