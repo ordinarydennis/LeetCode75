@@ -117,3 +117,105 @@ public:
 };
 
 https://leetcode.com/problems/successful-pairs-of-spells-and-potions/editorial/?envType=study-plan-v2&envId=leetcode-75
+
+
+class Solution {
+public:
+	vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
+
+		sort(potions.begin(), potions.end());
+
+		vector<int> ret;
+
+		int max = potions[potions.size() - 1];
+
+		for (long long s : spells)
+		{
+			long long f = ceil(1.0 * success / s);
+			
+			if (f > max) {
+				ret.push_back(0);
+				continue;
+			}
+
+			auto index = lower_bound(potions.begin(), potions.end(), f) - potions.begin();
+			ret.push_back(potions.size() - index);
+		}
+
+		return ret;
+	}
+};
+
+class Solution {
+public:
+	vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
+
+		sort(potions.begin(), potions.end());
+
+		vector<int> ret;
+
+		int max = potions[potions.size() - 1];
+
+		for (long long s : spells)
+		{
+			long long f = ceil(1.0 * success / s);
+
+			if (f > max) {
+				ret.push_back(0);
+				continue;
+			}
+
+			auto index = lower_bound(potions.begin(), potions.end(), f) - potions.begin();
+			ret.push_back(potions.size() - index);
+		}
+
+		return ret;
+	}
+};
+
+
+class Solution {
+
+public:
+	vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
+
+		sort(potions.begin(), potions.end());
+
+		vector<int> ret;
+
+		for (long long s : spells)
+		{
+			int f = success / s;
+
+			int begin = 0;
+			int end = potions.size() - 1;
+
+			while (begin < end)
+			{
+				int mid = begin + (end - begin) / 2;
+
+				if (f < potions[mid])
+				{
+					end = mid - 1;
+				}
+				else
+				{
+					begin = mid + 1;
+				}
+			}
+
+			ret.push_back(potions.size() - (end + 1));
+		}
+
+		return ret;
+	}
+};
+
+
+
+
+
+
+
+
+
