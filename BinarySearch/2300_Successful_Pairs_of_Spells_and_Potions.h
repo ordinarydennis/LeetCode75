@@ -214,8 +214,65 @@ public:
 
 
 
+class Solution {
+public:
+	vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
+
+		sort(potions.begin(), potions.end());
+
+		vector<int> ret;
+
+		for (int s : spells)
+		{
+
+			long long f = ceil(static_cast<double>(success) / s);
+
+			auto it = std::lower_bound(potions.begin(), potions.end(), f);
+
+			if (potions.end() == it)
+			{
+				ret.push_back(0);
+				continue;
+			}
+
+			int index = it - potions.begin();
+			
+			ret.push_back(potions.size() - index);
+		}
+
+		return ret;
+	}
+};
 
 
+class Solution {
+public:
+	vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
+
+		vector<pair<int, int>> spellPairs;
+
+		for (int i =0; i < spells.size(); i++)
+		{
+			spellPairs.push_back({ spells[i], i });
+		}
+
+		sort(spellPairs.begin(), spellPairs.end());
+		sort(potions.begin(), potions.end());
+
+		vector<int> ret(spells.size());
+
+		int lastIndex = potions.size() - 1;
+		
+		for (auto [spell, index] : spellPairs)
+		{
+			while (0 <= lastIndex && success <= static_cast<long long>(potions[lastIndex]) * spell)
+				lastIndex--;
+
+			ret[index] = potions.size() - (lastIndex + 1);
+		}
 
 
+		return ret;
 
+	}
+};
