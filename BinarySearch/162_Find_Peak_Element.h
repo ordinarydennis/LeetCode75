@@ -112,3 +112,34 @@ public:
 		return l;
 	}
 };
+
+
+
+class Solution {
+public:
+    int findPeakElement(vector<int>& nums) {
+
+		for (int i = 0; i < nums.size(); i++)
+		{
+			bool l = true;
+
+			if (0 <= i - 1)
+			{
+				l = nums[i - 1] <= nums[i];
+			}
+
+			bool r = true;
+			if (i + 1 < nums.size())
+			{
+				r = nums[i + 1] <= nums[i];
+			}
+
+			if (l && r)
+			{
+				return i;
+			}
+		}
+
+		return 0;
+    }
+};
