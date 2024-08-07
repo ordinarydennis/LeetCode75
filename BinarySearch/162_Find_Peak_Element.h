@@ -143,3 +143,43 @@ public:
 		return 0;
     }
 };
+
+
+
+class Solution {
+public:
+	int findPeakElement(vector<int>& nums) {
+
+		for (int i = 0; i < nums.size() - 1; i++)
+		{
+			if (nums[i] > nums[i + 1])
+			{
+				return i;
+			}
+		}
+
+		return nums.size() - 1;
+	}
+};
+
+class Solution {
+
+	int dfs(vector<int>& nums, int l , int r)
+	{
+		if (l == r)
+			return l;
+
+		int m = (l + r) / 2;
+
+		return (nums[m] < nums[m + 1]) ? dfs(nums, m + 1, r) : dfs(nums, l, m);
+	}
+
+
+public:
+	int findPeakElement(vector<int>& nums) {
+
+		return dfs(nums, 0, nums.size() - 1);
+
+	}
+};
+
