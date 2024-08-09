@@ -39,13 +39,13 @@ public:
 
 class Solution {
 public:
-    int minEatingSpeed(vector<int>& piles, int h) {
-       
+	int minEatingSpeed(vector<int>& piles, int h) {
+
 		int d = piles.size() / h;
 
 		int p = d * *max_element(piles.begin(), piles.end());
 
-		
+
 
 		int ret = INT_MAX;
 
@@ -63,7 +63,7 @@ public:
 					psum += (0 < n - p) ? p : n;
 
 					n -= p;
-					
+
 					count++;
 				}
 			}
@@ -79,5 +79,42 @@ public:
 		}
 
 		return ret;
-    }
+	}
+};
+
+
+//Brute force
+class Solution {
+public:
+	int minEatingSpeed(vector<int>& piles, int h) {
+
+		int eatSize = 1;
+
+		int max = *std::max_element(piles.begin(), piles.end());
+
+		while (eatSize <= max)
+		{
+			int total = 0;
+
+			for (int i = 0; i < piles.size(); i++)
+			{
+				total += (piles[i] / eatSize) + ((piles[i] % eatSize) ? 1 : 0);
+
+				if (h < total) {
+					break;
+				}
+			}
+
+			if (total <= h)
+			{
+				return eatSize;
+			}
+			else
+			{
+				eatSize++;
+			}
+		}
+
+		return max;
+	}
 };
