@@ -276,3 +276,94 @@ public:
 
 	}
 };
+
+
+//brute force
+//Time Limit Exceeded
+class Solution {
+public:
+	vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
+
+		vector<int> ret;
+
+		for (int s = 0; s < spells.size(); s++)
+		{
+			int count = 0;
+
+			for (int p = 0; p < potions.size(); p++)
+			{
+				if (success <= (long long)spells[s] * potions[p])
+				{
+					count++;
+				}
+			}
+
+			ret.push_back(count);
+		}
+
+		return ret;
+	}
+};
+
+class Solution {
+public:
+	vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
+
+		vector<int> ret;
+
+		sort(potions.begin(), potions.end());
+
+		for (int s : spells)
+		{
+			long long t = ceil(1.0 * success / s);
+
+			auto it = std::lower_bound(potions.begin(), potions.end(), t);
+			
+			if (it != potions.end())
+			{
+				int count = potions.size() - (it - potions.begin());
+
+				ret.push_back(count);
+			}
+			else
+			{
+				ret.push_back(0);
+			}
+		}
+
+		return ret;
+	}
+};
+
+class Solution {
+public:
+	vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
+
+		vector<int> ret(spells.size());
+
+		vector<pair<int, int>> sp;
+ 		for (int i = 0; i < spells.size(); i++)
+		{
+			sp.push_back({ spells[i], i });
+		}
+
+
+		sort(sp.begin(), sp.end());
+		sort(potions.begin(), potions.end());
+
+
+		int pIndex = potions.size() - 1;
+
+		for (int i = 0; i < sp.size(); i++)
+		{
+			while (success <= sp[i].first * potions[pIndex])
+			{
+				pIndex--;
+			}
+
+			ret[sp[i].second] = potion.size() - pIndex;
+		}
+
+		return ret;
+	}
+};
