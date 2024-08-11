@@ -90,3 +90,89 @@ public:
 		return ret;
 	}
 };
+
+
+//Time Limit Exceeded
+class Solution {
+
+
+private:
+
+	void dfs(int index, int sum, int min, int k, vector<int>& nums1, vector<int>& nums2)
+	{
+		if (0 == k)
+		{
+			ret = max(ret, static_cast<long long>(sum) * min);
+			return;
+		}
+
+		for (int i = index; i < nums1.size(); i++)
+		{
+			int m = std::min(min, nums2[i]);
+
+			dfs(i + 1, nums1[i] + sum, m, k - 1, nums1, nums2);
+		}
+	}
+
+
+	long long ret;
+
+public:
+	long long maxScore(vector<int>& nums1, vector<int>& nums2, int k) {
+
+
+		dfs(0, 0, INT_MAX, k, nums1, nums2);
+
+		return ret;
+
+	}
+};
+
+
+class Solution {
+public:
+	long long maxScore(vector<int>& nums1, vector<int>& nums2, int k) {
+
+		vector<pair<int, int>> p;
+
+		for (int i = 0; i < nums1.size(); i++)
+		{
+			p.push_back({ nums1[i], nums2[i] });
+		}
+
+		sort(p.begin(), p.end(), [](const pair<int, int>& l, const pair<int, int>& r)
+			{
+				return l.second > r.second;
+			}
+		);
+
+		long long sum = 0;
+		int m = INT_MAX;
+
+		std::priority_queue<int, vector<int>, greater<int>> pq;
+
+		for (int i = 0; i < k; i++)
+		{
+			sum += p[i].first;
+			pq.push(p[i].first);
+		}
+
+		long long ret = sum * p[k - 1].second;
+
+		for (int i = k; i < nums1.size(); i++)
+		{
+			sum -= pq.top();
+
+			pq.pop();
+
+			sum += p[i].first;
+
+			pq.push(p[i].first);
+
+			ret = std::max(ret, sum * p[i].second);
+
+		}
+
+		return ret;
+	}
+};
