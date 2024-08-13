@@ -203,3 +203,58 @@ public:
 		return count == 0 ? -1 : count;
 	}
 };
+
+
+class Solution {
+public:
+	int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
+
+		std::queue<array<int, 3>> q;
+
+		int maxX = maze[0].size() - 1;
+		int maxY = maze.size() - 1;
+
+		vector<vector<int>> dir = {
+			{ 0,  1 },
+			{ 0, -1 },
+			{ 1,  0 },
+			{-1,  0 },
+		};
+
+		maze[entrance[0]][entrance[1]] = 'e';
+
+		q.push( { entrance[0], entrance[1], 0 } );
+
+		while (q.size())
+		{
+			auto postion = q.front();
+
+			q.pop();
+
+			for (auto& d : dir)
+			{
+				int y = d[0];
+				int x = d[1];
+
+				int curY = postion[0] + y;
+				int curX = postion[1] + x;
+				int count = postion[2];
+
+				if (curY < 0 || maxY < curY || curX < 0 || maxX < curX)
+					continue;
+
+				if ('.' != maze[curY][curX])
+					continue;
+
+				if (0 == curY || maxY == curY || 0 == curX || maxX == curX)
+					return count + 1;
+				
+				maze[curY][curX] = 'v';
+
+				q.push( { curY, curX, count + 1 } );
+			}
+		}
+
+		return -1;
+	}
+};
