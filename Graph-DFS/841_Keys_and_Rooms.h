@@ -30,3 +30,34 @@ public:
 		return visited.end() == std::find(visited.begin(), visited.end(), false);
 	}
 };
+
+class Solution {
+
+private:
+
+	void dfs(vector<vector<int>>& rooms, int index)
+	{
+		if (visit[index])
+			return;
+
+		visit[index] = true;
+
+		auto keyList = rooms[index];
+
+		for (int k : keyList)
+			dfs(rooms, k);
+	}
+
+	vector<bool> visit;
+
+public:
+	bool canVisitAllRooms(vector<vector<int>>& rooms) {
+
+		visit.resize(rooms.size(), false);
+
+		dfs(rooms, 0);
+
+		return visit.end() == find(visit.begin(), visit.end(), false);
+
+	}
+};
