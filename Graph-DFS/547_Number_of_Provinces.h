@@ -59,3 +59,62 @@ public:
 		return ret;
 	}
 };
+
+class Solution {
+
+
+	void dfs(int g, int index, vector<vector<int>>& isConnected, std::unordered_map<int, vector<int>> pm)
+	{
+
+		auto& list = isConnected[index];
+
+		for (int i = 0; i < list.size(); i++)
+		{
+			if (1 != list[i])
+			{
+				continue;
+			}
+
+			if (v[i])
+			{
+				continue;
+			}
+
+			pm[g].push_back(i);
+
+			dfs(i, isConnected);
+			
+		}
+
+	}
+
+	vector<bool> v;
+
+public:
+	int findCircleNum(vector<vector<int>>& isConnected) {
+
+		map<int, vector<int>> pm;
+
+
+		int g = 0;
+
+		for (int i = 0; i < isConnected.size(); i++)
+		{
+			if (v[i])
+			{
+				continue;
+			}
+
+			pm[g].push_back(i);
+
+			dfs(g, i, isConnected);
+
+			g++;
+		}
+
+
+
+		return pm.size();
+
+	}
+};
