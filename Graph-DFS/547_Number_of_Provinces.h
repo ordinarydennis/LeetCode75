@@ -119,53 +119,50 @@ public:
 	}
 };
 
+
+
+//bfs
 class Solution {
-
-	void dfs(int index, vector<vector<int>>& isConnected, vector<bool>& visit, int& count)
-	{
-		if (visit[index])
-			return;
-
-		visit[index] = true;
-
-		count++;
-
-		auto& neighbor = isConnected[index];
-
-
-		for (int i = 0; i < neighbor.size(); i++)
-		{
-			if (0 == neighbor[i])
-				continue;
-
-			if (i == index)
-				continue;
-
-			dfs(i, isConnected, visit, count);
-		}
-
-	}
-
-
 public:
 	int findCircleNum(vector<vector<int>>& isConnected) {
 
-		
-		vector<bool> visit(isConnected.size(), false);
+		vector<bool> v(isConnected.size(), false);
 
 		int ret = 0;
 
 		for (int i = 0; i < isConnected.size(); i++)
 		{
-			int count = 0;
+			if (v[i])
+				continue;
 
-			dfs(i, isConnected, visit, count);
+			ret++;
 
-			if (count)
-				ret++;
+			queue<int> q;
+
+			q.push(i);
+
+			while (q.size())
+			{
+				auto node = q.front();
+
+				q.pop();
+
+				v[node] = true;
+
+				for (int n = 0; n < isConnected[node].size(); n++)
+				{
+					if (0 == isConnected[node][n] || v[n])
+					{
+						continue;
+					}
+					
+					q.push(n);
+
+				}
+			}
 		}
 
-		
+
 		return ret;
 	}
 };

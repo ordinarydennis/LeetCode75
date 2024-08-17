@@ -83,3 +83,96 @@ public:
 };
 
 //leetcode.com/problems/reorder-routes-to-make-all-paths-lead-to-the-city-zero/editorial/?envType=study-plan-v2&envId=leetcode-75
+
+
+class Solution {
+public:
+	int minReorder(int n, vector<vector<int>>& connections) {
+
+		unordered_map<int, vector<pair<int, int>>> m;
+
+		for (int i = 0; i < connections.size(); i++)
+		{
+			auto& e = connections[i];
+
+			m[e[0]].push_back({ e[1] , 1 });
+			m[e[1]].push_back({ e[0] , -1 });
+		}
+
+		queue<int> q;
+
+		q.push(0);
+
+		int ret = 0;
+
+		vector<int> v(connections.size() + 1);
+
+		while (q.size())
+		{
+			int t = q.front();
+
+			q.pop();
+
+			v[t] = true;
+
+			for (int i = 0; i < m[t].size(); i++)
+			{
+				if (false == v[m[t][i].first])
+				{
+					if (1 == m[t][i].second)
+					{
+						ret++;
+					}
+
+					q.push(m[t][i].first);
+				}
+			}	
+		}
+
+		return ret;
+	}
+};
+
+class Solution {
+
+	void dfs(int index, unordered_map<int, vector<pair<int, int>>>& m, vector<bool>& v)
+	{
+		if (v[index])
+			return;
+
+		v[index] = true;
+		
+		auto& neighbor = m[index];
+
+		for (int i = 0; i < neighbor.size(); i++)
+		{
+			if (false == v[neighbor[i].first])
+			{
+				ret += neighbor[i].second;
+				dfs(neighbor[i].first, m, v);
+			}
+		
+		}
+	}
+
+
+	int ret = 0;
+
+public:
+	int minReorder(int n, vector<vector<int>>& connections) {
+
+		unordered_map<int, vector<pair<int, int>>> m;
+
+		vector<bool> v(connections.size() + 1);
+
+		for (int i = 0; i < connections.size(); i++)
+		{
+			m[connections[i][0]].push_back({ connections[i][1], 1 });
+			m[connections[i][1]].push_back({ connections[i][0], 0 });
+		}
+
+		dfs(0, m, v);
+
+		return ret;
+	}
+};
