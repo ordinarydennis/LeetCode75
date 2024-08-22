@@ -99,25 +99,25 @@ public:
 
 class Solution {
 
-	void dfs(TreeNode* root, bool isLeft, int sum)
+	void dfs(TreeNode* root, bool fromLeft, int sum)
 	{
 		if (!root)
 		{
 			return;
 		}
+		
+		ret = max(ret, sum);
 
-		if (isLeft)
+		if (fromLeft)
 		{
-			dfs(root->left, true, 0);
-			dfs(root->right, false, sum + root->val);
+			dfs(root->left, true, 1);
+			dfs(root->right, false, sum + 1);
 		}
 		else
 		{
-			dfs(root->right, false, 0);
-			dfs(root->left, true, sum + root->val);
+			dfs(root->right, false, 1);
+			dfs(root->left, true, sum + 1);
 		}
-
-		ret = max(ret, sum + root->val);
 	}
 
 	int ret = 0;
@@ -125,9 +125,8 @@ class Solution {
 public:
 	int longestZigZag(TreeNode* root) {
 
-		dfs(root->left, true, 0);
-
-		dfs(root->right, false, 0);
+		dfs(root->left, true, 1);
+		dfs(root->right, false, 1);
 
 		return ret;
 	}
