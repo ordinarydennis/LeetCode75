@@ -166,3 +166,68 @@ public:
 
 
 https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/editorial/?envType=study-plan-v2&envId=leetcode-75
+
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+
+	bool dfs(TreeNode* root, int val, vector<TreeNode*>& v)
+	{
+		if (!root)
+		{
+			return false;
+		}
+
+		if (root->val == val)
+		{
+			v.push_back(root);
+			return true;
+		}
+
+		bool lFind = dfs(root->left, val, v);
+		bool rFind = dfs(root->right, val, v);
+
+		if (lFind || rFind)
+		{
+			v.push_back(root);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+
+public:
+	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+
+		vector<TreeNode*> v1;
+		vector<TreeNode*> v2;
+
+		dfs(root, p->val, v1);
+		dfs(root, q->val, v2);
+
+		for (auto n1 : v1)
+		{
+			for (auto n2 : v2)
+			{
+				if (n1->val == n2->val)
+				{
+					return n1;
+				}
+			}
+		}
+
+		return nullptr;
+	}
+};
