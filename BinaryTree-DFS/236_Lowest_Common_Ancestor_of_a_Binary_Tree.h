@@ -231,3 +231,46 @@ public:
 		return nullptr;
 	}
 };
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+
+	bool dfs(TreeNode* root, TreeNode* p, TreeNode* q)
+	{
+		if (!root)
+			return false;
+
+		int sum = 
+			dfs(root->left, p, q) + 
+			dfs(root->right, p, q) + 
+			(root->val == p->val || root->val == q->val);
+
+		if (2 <= sum)
+		{
+			ret = root;
+		}
+
+		return 0 < sum;
+	}
+
+
+	TreeNode* ret = nullptr;
+
+
+public:
+	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+
+		dfs(root, p, q);
+
+		return ret;
+	}
+};
