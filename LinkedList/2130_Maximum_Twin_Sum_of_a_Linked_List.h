@@ -61,3 +61,49 @@ public:
 
 	}
 };
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+
+public:
+	int pairSum(ListNode* head) {
+
+		vector<int> list;
+
+		ListNode* cur = head;
+		ListNode* pre = nullptr;
+
+		while (cur)
+		{
+			list.push_back(cur->val);
+
+			auto* next = cur->next;
+
+			cur->next = pre;
+
+			pre = cur;
+
+			cur = next;
+		}
+
+		int ret = INT_MIN;
+
+		for (int i = 0; i < list.size() / 2; i++)
+		{
+			ret = std::max(ret, list[i] + pre->val);
+
+			pre = pre->next;
+		}
+
+		return ret;
+	}
+};
