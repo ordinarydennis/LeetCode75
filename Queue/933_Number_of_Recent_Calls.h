@@ -25,3 +25,24 @@ private:
  * RecentCounter* obj = new RecentCounter();
  * int param_1 = obj->ping(t);
  */
+
+class RecentCounter {
+public:
+	RecentCounter() {
+
+	}
+
+	int ping(int t) {
+
+		req.push(t);
+
+		while (req.front() < t - 3000)
+			req.pop();
+
+		return req.size();
+	}
+
+
+private:
+	std::queue<int> req;
+};
