@@ -89,3 +89,122 @@ public:
 		return remainingAsteroids;
 	}
 };
+
+
+class Solution {
+public:
+	vector<int> asteroidCollision(vector<int>& asteroids) {
+
+		stack<int> st;
+
+		for (int i = 0; i < asteroids.size(); i++)
+		{
+			auto a = asteroids[i];
+
+			if (st.empty())
+			{
+				st.push(a);
+				continue;
+			}
+
+			while (st.size())
+			{
+				auto t = st.top();
+
+				//meet
+				if (0 < t && a < 0)
+				{
+					if(t > -1 * a)
+					{ 
+						break;
+					}
+					else if (t < -1 * a)
+					{
+						st.pop();
+
+						if (st.empty())
+						{
+							st.push(a);
+							break;
+						}
+					}
+					else if (t == -1 * a)
+					{
+						st.pop();
+						break;
+					}
+				}
+				else
+				{
+					st.push(a);
+					break;
+				}
+			}
+
+		}
+
+
+		//vector<int> ret;
+
+		/*while (st.size())
+		{
+			ret.push_back(st.top());
+			st.pop();
+		}
+
+		reverse(ret.begin(), ret.end());*/
+
+
+		vector<int> ret(st.size());
+
+		for (int i = ret.size() - 1; 0 <= i; i--)
+		{
+			ret[i] = st.top();
+			st.pop();
+		}
+
+		return ret;
+	}
+};
+
+class Solution {
+public:
+	vector<int> asteroidCollision(vector<int>& asteroids) {
+		stack<int> st;
+
+		for (int asteroid : asteroids) {
+			int flag = 1;
+			while (!st.empty() && (st.top() > 0 && asteroid < 0)) {
+				// If the top asteroid in the stack is smaller, then it will explode.
+				// Hence pop it from the stack, also continue with the next asteroid in the stack.
+				if (abs(st.top()) < abs(asteroid)) {
+					st.pop();
+					continue;
+				}
+				// If both asteroids are the same size, then both asteroids will explode.
+				// Pop the asteroid from the stack; also, we won't push the current asteroid to the stack.
+				else if (abs(st.top()) == abs(asteroid)) {
+					st.pop();
+				}
+
+				// If we reach here, the current asteroid will be destroyed
+				// Hence, we should not add it to the stack
+				flag = 0;
+				break;
+			}
+
+			if (flag) {
+				st.push(asteroid);
+			}
+		}
+
+		// Add the asteroids from the stack to the vector in the reverse order.
+		vector<int> remainingAsteroids(st.size());
+		for (int i = remainingAsteroids.size() - 1; i >= 0; i--) {
+			remainingAsteroids[i] = st.top();
+			st.pop();
+		}
+
+		return remainingAsteroids;
+	}
+};
