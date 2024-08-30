@@ -24,3 +24,32 @@ public:
 		return ret;
 	}
 };
+
+
+class Solution {
+public:
+	int equalPairs(vector<vector<int>>& grid) {
+
+		int n = grid.size();
+
+		int ret = 0;
+
+		for (int i = 0; i < n; i++)
+		{
+			vector<int> cList(n);
+
+			for (int j = 0; j < n; j++)
+				cList[j] = grid[j][i];
+
+			for (int a = 0; a < n; a++)
+			{
+				if (cList == grid[a])
+				{
+					ret++;
+				}
+			}
+		}
+
+		return ret;
+	}
+};
