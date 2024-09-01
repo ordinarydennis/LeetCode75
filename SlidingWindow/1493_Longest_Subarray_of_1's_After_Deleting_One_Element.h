@@ -66,3 +66,28 @@ public:
         return ret - 1;
     }
 };
+
+class Solution {
+public:
+    int longestSubarray(vector<int>& nums) {
+
+        int zCount = 0;
+        int start = 0;
+        int ret = 0;
+
+        for (int i = 0; i < nums.size(); i++)
+        {
+            zCount += (0 == nums[i]) ? 1 : 0;
+
+            while (1 < zCount)
+            {
+                zCount -= (nums[start] == 0) ? 1 : 0;
+                start++;
+            }
+
+            ret = max(ret, i - start);
+        }
+
+        return ret;
+    }
+};
