@@ -42,3 +42,89 @@ public:
 
 //If the result string size is m, 
 //space complexity O(m)
+
+
+class Solution {
+public:
+	string reverseWords(string s) {
+
+		vector<string> sList;
+
+		string str;
+
+		for (int i = 0; i <= s.size(); i++)
+		{
+			if (i == s.size() && str.size())
+			{
+				sList.push_back(std::move(str));
+				break;
+			}
+
+			if (' ' == s[i])
+			{
+				if (str.size())
+				{
+					sList.push_back(std::move(str));
+				}
+			}
+			else
+			{
+				str += s[i];
+			}
+		}
+
+		string ret;
+
+		for (auto it = sList.rbegin(); it != sList.rend(); ++it)
+		{
+			ret += *it + " ";
+		}
+
+		ret.pop_back();
+
+		return ret;
+	}
+};
+
+class Solution {
+public:
+	string reverseWords(string s) {
+
+		std::stack<string> st;
+
+		string str;
+
+		for (int i = 0; i <= s.size(); i++)
+		{
+			if (i == s.size() && str.size())
+			{
+				st.push(std::move(str));
+				break;
+			}
+			if (' ' == s[i])
+			{
+				if (str.size())
+				{
+					st.push(std::move(str));
+				}	
+			}
+			else
+			{
+				str += s[i];
+			}
+		}
+
+
+		string ret;
+
+		while (st.size())
+		{
+			ret += st.top() + " ";
+			st.pop();
+		}
+
+		ret.pop_back();
+
+		return ret;
+	}
+};
