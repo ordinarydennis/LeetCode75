@@ -137,3 +137,71 @@ public:
 };
 
 https://leetcode.com/problems/product-of-array-except-self/editorial/?envType=study-plan-v2&envId=leetcode-75
+
+
+class Solution {
+public:
+	vector<int> productExceptSelf(vector<int>& nums) {
+
+		vector<int> left(nums.size());
+		vector<int> right(nums.size());
+
+		int total = 1;
+		int total2 = 1;
+
+		int n = nums.size();
+
+		vector<int> ret(n);
+
+		for (int i = 0; i < n; i++)
+		{	
+			total *= nums[i];
+			left[i] = total;
+
+			total2 *= nums[n - i - 1];
+			right[n - i - 1] = total2;
+		}
+
+
+		for (int i = 0; i < n; i++)
+		{
+			int n1 = (0 < i) ? left[i - 1] : 1;
+			int n2 = (i < n - 1) ? right[i + 1] : 1;
+
+			ret[i] = n1 * n2;
+		}
+
+		return ret;
+	}
+};
+
+class Solution {
+public:
+	vector<int> productExceptSelf(vector<int>& nums) {
+
+		int n = nums.size();
+		vector<int> left(nums.size());
+		vector<int> right(nums.size());
+		vector<int> ret(nums.size());
+
+		left[0] = 1;
+		right[n - 1] = 1;
+
+		for (int i = 1; i < n; i++)
+		{
+			left[i] = left[i - 1] * nums[i - 1];
+		}
+
+		for (int i = n - 2; 0 <= i; i--)
+		{
+			right[i] = right[i + 1] * nums[i + 1];
+		}
+
+		for (int i = 0; i < n; i++)
+		{
+			ret[i] = left[i] * right[i];
+		}
+
+		return ret;
+	}
+};
