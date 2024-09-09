@@ -121,7 +121,7 @@ public:
 						chars[i - count + a + 1] = str[a];
 					}
 				}
-	
+
 				count = 1;
 				pre = c;
 			}
@@ -139,5 +139,83 @@ public:
 
 		return i - count + str.size() + 1;
 
+	}
+};
+
+
+class Solution {
+public:
+	int compress(vector<char>& chars) {
+
+
+		int pos = 0;
+	
+		for (int i = 0; i < chars.size(); i++)
+		{
+			char c = chars[i];
+
+			int count = 1;
+
+			while (i + l -1 < chars.size() && chars[i] == chars[i + count])
+			{
+				count++;
+			}
+
+			string str;
+
+			if (1 < count)
+			{
+				string str = to_string(count);
+
+				for (char c : str)
+				{
+					chars[pos] = c;
+				}
+
+				count = 1;
+			}	
+		}
+
+	}
+};
+
+
+class Solution {
+public:
+	int compress(vector<char>& chars) {
+
+		int r = 0;
+
+		for (int i = 0; i < chars.size();)
+		{
+			char c = chars[i];
+
+			int start = i;
+
+			while(i + 1 < chars.size() && chars[i] == chars[i + 1])
+				i++;
+
+			int l = i - start + 1;
+
+			chars[r] = c;
+
+			r++;
+
+			if (1 < l)
+			{
+				auto lstr = to_string(l);
+
+				for (int p = 0; p < lstr.size(); p++)
+				{
+					chars[r + p] = lstr[p];
+				}
+
+				r += lstr.size();
+			}
+
+			i++;
+		}
+
+		return r;
 	}
 };
