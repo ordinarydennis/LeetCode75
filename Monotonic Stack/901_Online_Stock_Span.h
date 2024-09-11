@@ -1,38 +1,38 @@
 class StockSpanner {
 public:
-    StockSpanner() {
+	StockSpanner() {
 
-    }
+	}
 
-    int next(int price) {
+	int next(int price) {
 
-        list.push_back(price);
+		list.push_back(price);
 
-        int rbegin = list.size() - 1;
+		int rbegin = list.size() - 1;
 
-        int ret = 0;
+		int ret = 0;
 
-        for (int i = rbegin; 0 <= i; i--)
-        {
-            if (list[i] <= price)
-            {
-                ret++;
-            }
-            else
-            {
-                break;
-            }
+		for (int i = rbegin; 0 <= i; i--)
+		{
+			if (list[i] <= price)
+			{
+				ret++;
+			}
+			else
+			{
+				break;
+			}
 
-        }
+		}
 
-        return ret;
-    }
+		return ret;
+	}
 
 
 
 private:
 
-    vector<int> list;
+	vector<int> list;
 
 };
 
@@ -40,31 +40,66 @@ private:
 
 class StockSpanner {
 public:
-    StockSpanner() {
+	StockSpanner() {
 
-    }
+	}
 
-    int next(int price) {
+	int next(int price) {
 
-        int add = 1;
+		int add = 1;
 
-        while (st.size() && st.top().first <= price)
-        {
-            auto p = st.top();
+		while (st.size() && st.top().first <= price)
+		{
+			auto p = st.top();
 
-            add += p.second;
+			add += p.second;
 
-            st.pop();
-        }
+			st.pop();
+		}
 
-        st.push({ price , add });
+		st.push({ price , add });
 
-        return add;
-    }
+		return add;
+	}
 
 
 private:
-    stack<pair<int, int>> st;
+	stack<pair<int, int>> st;
+
+};
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner* obj = new StockSpanner();
+ * int param_1 = obj->next(price);
+ */
+
+
+
+class StockSpanner {
+public:
+	StockSpanner() {
+
+	}
+
+	int next(int price) {
+
+		int count = 1;
+
+		while (st.size() && st.top().first <= price)
+		{
+			count += st.top().second;
+			st.pop();
+		}
+
+		st.push({ price, count });
+
+		return count;
+	}
+
+
+private:
+	stack<pair<int, int>> st;
 
 };
 
