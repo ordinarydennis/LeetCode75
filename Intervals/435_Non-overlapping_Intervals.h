@@ -83,3 +83,49 @@ public:
 //끝점 정렬 : 3개의 구간을 선택, 더 많은 구간 선택 가능.
 //이 예시에서 볼 수 있듯이, 끝점으로 정렬하는 방식은 각 구간이 가능한 한 빨리 끝나도록 하여 다음 구간 선택의 여지를 최대한 확보하는 전략입니다.
 //이는 겹침을 최소화하고, 가능한 많은 구간을 선택하는 데 유리합니다.따라서, 각 구간을 끝점 기준으로 정렬하고 선택하는 것이 종종 최적의 해를 제공하는 전략이 됩니다.
+
+
+
+class Solution {
+public:
+	int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+
+		sort(intervals.begin(), intervals.end(), [](vector<int>& l, vector<int>& r) {
+			
+			if (l[1] == r[1])
+			{
+				return l[0] < r[0];
+			}
+
+			return l[1] < r[1];
+
+
+			}
+		
+		);
+
+		int end = INT_MIN;
+
+		int ret = 0;
+
+		for (int i = 0; i < intervals.size(); i++)
+		{
+			if (end <= intervals[i][0])
+			{
+				end = intervals[i][1];
+			}
+			else
+			{
+				ret++;
+			}
+		}
+
+		return ret;
+	}
+};
+
+https://leetcode.com/problems/non-overlapping-intervals/editorial/?envType=study-plan-v2&envId=leetcode-75
+
+
+//Because the next interval must have a start time greater than or equal to k, 
+//a larger value of k can never give us more choices than a smaller value of k.
