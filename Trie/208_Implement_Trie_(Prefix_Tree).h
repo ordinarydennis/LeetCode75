@@ -320,7 +320,7 @@ private:
 			return true;
 		}
 
-		return SearchNode(childNode, word, index + 1);
+		return SearchNodePrefix(childNode, word, index + 1);
 	}
 
 };
