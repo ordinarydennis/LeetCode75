@@ -215,3 +215,122 @@ private:
  * bool param_2 = obj->search(word);
  * bool param_3 = obj->startsWith(prefix);
  */
+
+
+class Trie {
+public:
+	Trie() {
+
+		mRoot = new Node();
+	}
+
+	void insert(string word) {
+
+		AddNode(mRoot, word, 0);
+
+	}
+
+	bool search(string word) {
+
+		return SearchNode(mRoot, word, 0);
+
+	}
+
+	bool startsWith(string prefix) {
+
+		return SearchNodePrefix(mRoot, prefix, 0);
+
+	}
+
+
+private:
+	
+	struct Node
+	{
+		bool isWord = false;
+		std::vector<Node*> child;
+
+		Node()
+			:child('z' - 'a' + 1)
+		{
+
+		}
+	};
+
+
+	Node* mRoot = nullptr;
+
+	void AddNode(Node* p, string word, int index)
+	{
+		auto* childNode = p->child[word[index] - 'a'];
+
+		if (!childNode)
+		{
+			childNode = new Node;
+			p->child[word[index] - 'a'] = childNode;
+		}
+		
+		if (word.size() - 1 == index)
+		{
+			childNode->isWord = true;
+			return;
+		}
+
+		AddNode(childNode, word, index + 1);
+	}
+
+
+	bool SearchNode(Node* p, string word, int index)
+	{
+		auto* childNode = p->child[word[index] - 'a'];
+
+		if (nullptr == childNode)
+		{
+			return false;
+		}
+
+		if (word.size() - 1 == index)
+		{
+			if (childNode->isWord)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+			
+		}
+
+		return SearchNode(childNode, word, index + 1);
+	}
+
+
+	bool SearchNodePrefix(Node* p, string word, int index)
+	{
+		auto* childNode = p->child[word[index] - 'a'];
+
+		if (nullptr == childNode)
+		{
+			return false;
+		}
+
+		if (word.size() - 1 == index)
+		{
+			return true;
+		}
+
+		return SearchNode(childNode, word, index + 1);
+	}
+
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
+
+"apple"
