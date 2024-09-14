@@ -333,4 +333,114 @@ private:
  * bool param_3 = obj->startsWith(prefix);
  */
 
-"apple"
+class Trie {
+
+	class Node;
+
+public:
+	Trie()
+		:rootNode(nullptr)
+
+	{
+		rootNode = new Node;
+	}
+
+	void insert(string word) {
+
+		auto* node = rootNode;
+
+		for (char c : word)
+		{
+			auto* child = node->GetChild(c);
+
+			if (!child)
+			{
+				child = new Node;
+				node->SetChild(c, child);
+			}
+
+			node = child;
+		}
+
+		node->SetIsWord(true);
+
+	}
+
+	bool search(string word) {
+
+		auto* node = findNode(word);
+
+		return node && node->IsWord();
+	}
+
+
+	bool startsWith(string word) {
+
+		auto* node = findNode(word);
+
+		return node;
+
+	}
+
+private:
+	Node* findNode(string prefix) {
+
+		auto* node = rootNode;
+
+		for (char c : prefix)
+		{
+			auto* cNode = node->GetChild(c);
+			if (!cNode)
+			{
+				return nullptr;
+			}
+
+			node = cNode;
+		}
+
+		return node;
+	}
+
+
+
+private:
+	Node* rootNode;
+
+private:
+	class Node
+	{
+	public:
+		Node()
+			:isWord(false),
+			childs('z' - 'a' + 1)
+		{
+
+		}
+
+
+		Node* GetChild(char c)
+		{
+			return childs[c - 'a'];
+		}
+
+		void SetChild(char c, Node* node)
+		{
+			childs[c - 'a'] = node;
+		}
+
+		void SetIsWord(bool isWord)
+		{
+			this->isWord = isWord;
+		}
+
+		bool IsWord()
+		{
+			return isWord;
+		}
+
+	private:
+		bool isWord = false;
+		vector<Node*> childs;
+	};
+
+};
