@@ -92,3 +92,41 @@ public:
 		return ret;
 	}
 };
+
+
+class Solution {
+public:
+	vector<int> countBits(int n) {
+
+		if (0 ==n )
+		{
+			return { 0 };
+		}
+
+		int l = 0;
+		int p = 1;
+
+		vector<int> ret(n + 1);
+
+		ret[0] = 0;
+		ret[1] = 1;
+
+
+		for (int i = 2; i <= n; i++)
+		{
+			if (i == pow(2, p))
+			{
+				p++;
+				ret[i] = 1;
+				l = i;
+			}
+			else
+			{
+				ret[i] = ret[i - l] + 1;
+			}
+		}
+
+
+		return ret;
+	}
+};
