@@ -68,3 +68,40 @@ public:
 		return ret;
 	}
 };
+
+
+class Solution {
+public:
+	int minFlips(int a, int b, int c) {
+
+		int ret = 0;
+
+		while (a || b || c)
+		{
+			if (c & 1)
+			{
+				if (0 == (a & 1) && 0 == (b & 1))
+				{
+					ret++;
+				}
+			}
+			else
+			{
+				if ((a & 1) && (b & 1))
+				{
+					ret += 2;
+				}
+				else if (a & 1 || b & 1)
+				{
+					ret++;
+				}
+			}
+
+			c >>= 1;
+			a >>= 1;
+			b >>= 1;
+		}
+
+		return ret;
+	}
+};
