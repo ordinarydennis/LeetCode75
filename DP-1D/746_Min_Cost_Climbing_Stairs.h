@@ -204,3 +204,48 @@ public:
 		return memo[cost.size()];
 	}
 };
+
+class Solution {
+public:
+	int minCostClimbingStairs(vector<int>& cost) {
+
+		vector<int> dp(cost.size() + 1);
+
+
+		for (int i = 2; i <= cost.size(); i++)
+		{
+			int m = std::min(
+				cost[i - 1] + dp[i - 1],
+				cost[i - 2] + dp[i - 2]
+			);
+
+			dp[i] = m;
+		}
+
+
+		return dp[cost.size()];
+	}
+};
+
+
+class Solution {
+public:
+	int minCostClimbingStairs(vector<int>& cost) {
+
+		int one = 0;
+		int two = 0;
+
+		for (int i = 2; i <= cost.size(); i++)
+		{
+			int temp = one;
+			one = std::min(
+				cost[i - 1] + one,
+				cost[i - 2] + two
+			);
+
+			two = temp;
+		}
+
+		return one;
+	}
+};
