@@ -107,3 +107,58 @@ public:
 		return ret;
 	}
 };
+
+class Solution {
+
+
+	void dfs(int index, string& digits, string& str)
+	{
+		if (digits.size() <= index)
+		{
+			ret.push_back(str);
+			return;
+		}
+
+		string d = m[digits[index]];
+
+		for(int i = 0; i < d.size(); i++)
+		{
+			str += d[i];
+
+			dfs(index + 1, digits, str);
+
+			str.pop_back();
+		}
+	}
+
+
+	vector<string> ret;
+
+	unordered_map<char, string> m = {
+
+		{'2', "abc"},
+		{'3', "def"},
+		{'4', "ghi"},
+		{'5', "jkl"},
+		{'6', "mno"},
+		{'7', "pqrs"},
+		{'8', "tuv"},
+		{'9', "wxyz"},
+
+	};
+
+public:
+	vector<string> letterCombinations(string digits) {
+
+		if (digits.empty())
+		{
+			return {};
+		}
+
+		string str;
+
+		dfs(0, digits, str);
+
+		return ret;
+	}
+};
