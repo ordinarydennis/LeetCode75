@@ -114,19 +114,69 @@ public:
 	}
 };
 
-Input: k = 3, n = 7
-Output : [[1, 2, 4]]
-	Explanation :
-		1 + 2 + 4 = 7
-		There are no other valid combinations.
+class Solution {
 
+	void dfs(vector<vector<int>>& ret, vector<int>& list)
+	{
+		if (list.size() == k)
+		{
+			if (n == accumulate(list.begin(), list.end(), 0))
+			{
+				auto list2 = list;
 
+				sort(list2.begin(), list2.end());
 
-		k =
-		3
-		n =
-		7
-		Output
-		[[1, 2, 4], [1, 2, 3]]
-		Expected
-		[[1, 2, 4]]
+				if (ret.end() == find(ret.begin(), ret.end(), list2))
+				{
+					ret.push_back(list);
+				}
+			}
+
+			return;
+		}
+
+		for (int i = 1; i <= 9; i++)
+		{
+			if (v.count(i))
+				continue;
+
+			v.insert(i);
+
+			list.push_back(i);
+
+			if (n < accumulate(list.begin(), list.end(), 0))
+			{
+				list.pop_back();
+				v.erase(i);
+				return;
+			}
+
+			dfs(ret, list);
+
+			list.pop_back();
+
+			v.erase(i);
+		}
+
+	}
+
+	unordered_set<int> v;
+
+private:
+	int k = 0;
+	int n = 0;
+
+public:
+	vector<vector<int>> combinationSum3(int k, int n) {
+
+		this->k = k;
+		this->n = n;
+
+		vector<vector<int>> ret;
+		vector<int> list;
+
+		dfs(ret, list);
+
+		return ret;
+	}
+};
