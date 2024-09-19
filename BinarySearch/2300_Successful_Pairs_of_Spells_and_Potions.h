@@ -367,3 +367,54 @@ public:
 		return ret;
 	}
 };
+
+
+
+class Solution {
+public:
+	vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
+
+		sort(potions.begin(), potions.end());
+
+		vector<int> ret;
+
+		for (int i = 0; i < spells.size(); i++)
+		{
+			int f = ceil(float(success) / float(spells[i]));
+
+			int left = 0;
+
+			int right = potions.size() - 1;
+
+			int count = 0;
+
+			while (left <= right)
+			{
+				int mid = left + ((right - left) / 2);
+
+				int result = potions[mid];
+
+				if (f == result || left == right)
+				{
+					count = potions.size() - mid - 1;
+					break;
+				}
+				
+				if (f < result)
+				{
+					right = mid - 1;
+				}
+				else
+				{
+					left = mid + 1;
+				}
+				
+			}
+
+			ret.push_back(count);
+
+		}
+
+		return ret;
+	}
+};
