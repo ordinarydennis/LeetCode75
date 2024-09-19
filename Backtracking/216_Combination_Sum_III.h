@@ -180,3 +180,43 @@ public:
 		return ret;
 	}
 };
+
+class Solution {
+
+	void dfs(int index, int remain, vector<int>& list, vector<vector<int>>& ret)
+	{
+		if (list.size() == k && 0 == remain)
+		{
+			ret.push_back(list);
+			return;
+		}
+
+		if (remain < 0 || list.size() == k)
+			return;
+
+
+		for (int i = index; i <= 9; i++)
+		{
+			list.push_back(i);
+			dfs(i + 1, remain - i, list, ret);
+			list.pop_back();
+		}
+	}
+
+
+	int k = 0;
+
+
+public:
+	vector<vector<int>> combinationSum3(int k, int n) {
+
+		this->k = k;
+
+		vector<vector<int>> ret;
+		vector<int> list;
+
+		dfs(1, n, list, ret);
+
+		return ret;
+	}
+};
