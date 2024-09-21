@@ -342,7 +342,7 @@ public:
 		vector<int> ret(spells.size());
 
 		vector<pair<int, int>> sp;
- 		for (int i = 0; i < spells.size(); i++)
+		for (int i = 0; i < spells.size(); i++)
 		{
 			sp.push_back({ spells[i], i });
 		}
@@ -413,6 +413,65 @@ public:
 
 			ret.push_back(count);
 
+		}
+
+		return ret;
+	}
+};
+
+
+class Solution {
+public:
+	vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
+
+		vector<int> ret(spells.size());
+
+		sort(potions.begin(), potions.end());
+
+		for (int i = 0; i < spells.size(); i++)
+		{
+			long long fn = ceil((success * 1.0) / spells[i]);
+
+			auto it = lower_bound(potions.begin(), potions.end(), fn);
+
+			if (potions.end() != it)
+				ret[i] = potions.end() - it;
+		}
+
+		return ret;
+	}
+};
+
+class Solution {
+public:
+	vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
+
+		vector<pair<long long, int>> spellPairs;
+
+		for (int i = 0; i < spells.size(); i++)
+		{
+			spellPairs.push_back( { spells[i], i } );
+		}
+
+		sort(spellPairs.begin(), spellPairs.end());
+		sort(potions.begin(), potions.end());
+
+		int max = potions.size() - 1;
+
+		int spellIndex = 0;
+
+		int potionIndex = potions.size() - 1;
+
+		vector<int> ret(spells.size());
+
+		for (int i = 0; i < spells.size(); i++)
+		{
+			while (0 <= potionIndex && success <= spellPairs[i].first * potions[potionIndex])
+			{
+				potionIndex--;
+			}
+
+			ret[spellPairs[i].second] = potions.size() - potionIndex - 1;
 		}
 
 		return ret;
