@@ -219,6 +219,7 @@ public:
 	int minEatingSpeed(vector<int>& piles, int h) {
 
 		int minCount = 1;
+
 		int maxCount  = *max_element(piles.begin(), piles.end());
 
 		while (minCount < maxCount)
@@ -237,20 +238,90 @@ public:
 					break;
 			}
 
-			if (h == count)
+			if (count <= h) //너무 많이 먹은 경우
 			{
-				return eatCount;
+				maxCount = eatCount;
 			}
-
-			//너무 많이 먹은 경우
-			if (h < count)
+			else //너무 적게 먹은 경우
 			{
 				minCount = eatCount + 1;
 			}
+		}
+
+		return maxCount;
+	}
+};
+
+
+//brute force
+class Solution {
+public:
+	int minEatingSpeed(vector<int>& piles, int h) {
+
+		int eatCount = 1;
+
+		int maxCount = *max_element(piles.begin(), piles.end());
+
+		while (eatCount <= maxCount)
+		{
+			int count = 0;
+
+			for (int i = 0; i < piles.size(); i++)
+			{
+				int b = piles[i];
+
+				count += b / eatCount + (b % eatCount != 0);
+
+				if (h < count)
+					break;
+			}
+
+			if (count <= h)
+			{
+				return eatCount;
+			}
 			else
 			{
-				//너무 적게 먹은 경우
-				maxCount = eatCount - 1;
+				eatCount++;
+			}
+		}
+
+		return eatCount;
+	}
+};
+
+
+//binary search
+class Solution {
+public:
+	int minEatingSpeed(vector<int>& piles, int h) {
+
+		int minCount = 1;
+		int maxCount = *max_element(piles.begin(), piles.end());
+
+		while (minCount < maxCount)
+		{
+			int eatCount = (minCount + maxCount) / 2;
+
+			int spendH = 0;
+
+			for (int i = 0; i < piles.size(); i++)
+			{
+				spendH += piles[i] / eatCount + (0 < piles[i] % eatCount);
+
+				if (h < spendH)
+				{
+					break;
+				}
+			}
+
+			if (spendH <= h)
+			{
+				maxCount = eatCount;
+			}
+			else
+			{
+				minCount = eatCount + 1;
 			}
 		}
 
