@@ -213,3 +213,47 @@ public:
 		return 0;
 	}
 };
+
+class Solution {
+public:
+	int minEatingSpeed(vector<int>& piles, int h) {
+
+		int minCount = 1;
+		int maxCount  = *max_element(piles.begin(), piles.end());
+
+		while (minCount < maxCount)
+		{
+			int count = 0;
+
+			int eatCount = (minCount + maxCount) / 2;
+
+			for (int i = 0; i < piles.size(); i++)
+			{
+				int b = piles[i];
+
+				count += b / eatCount + (b % eatCount != 0);
+
+				if (h < count)
+					break;
+			}
+
+			if (h == count)
+			{
+				return eatCount;
+			}
+
+			//너무 많이 먹은 경우
+			if (h < count)
+			{
+				minCount = eatCount + 1;
+			}
+			else
+			{
+				//너무 적게 먹은 경우
+				maxCount = eatCount - 1;
+			}
+		}
+
+		return maxCount;
+	}
+};
