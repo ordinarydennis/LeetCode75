@@ -227,3 +227,69 @@ private:
 	int smallest = 1;
 
 };
+
+
+class SmallestInfiniteSet {
+public:
+	SmallestInfiniteSet() {
+
+	}
+
+	int popSmallest() {
+
+		if (q.size())
+		{
+			int t = q.top();
+
+			if (t < next)
+			{
+				q.pop();
+				s.erase(t);
+				return t;
+			}
+			else if (t == next)
+			{
+				q.pop();
+				s.erase(t);
+				return next++;
+			}
+			else
+			{
+				return next++;
+			}
+		}
+		else
+		{
+			return next++;
+		}
+	}
+
+	void addBack(int num) {
+
+		if (s.count(num) || next <= num)
+		{
+			return;
+		}
+
+		s.insert(num);
+		q.push(num);
+	}
+
+
+private:
+
+	int next = 1;
+
+	priority_queue<int, vector<int>, greater<int>> q;
+	unordered_set<int> s;
+
+
+};
+
+
+/**
+ * Your SmallestInfiniteSet object will be instantiated and called as such:
+ * SmallestInfiniteSet* obj = new SmallestInfiniteSet();
+ * int param_1 = obj->popSmallest();
+ * obj->addBack(num);
+ */
