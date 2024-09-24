@@ -132,3 +132,63 @@ public:
 
 	}
 };
+
+
+
+
+
+class Solution {
+public:
+	int findKthLargest(vector<int>& nums, int k) {
+
+		sort(nums.begin(), nums.end(), greater<int>());
+
+		return nums[k - 1];
+	}
+};
+
+
+class Solution {
+public:
+	int findKthLargest(vector<int>& nums, int k) {
+
+		std::priority_queue<int> q;
+
+		for (int n : nums)
+		{
+			q.push(n);
+		}
+
+		int ret = 0;
+
+		while(k)
+		{
+			ret = q.top();
+			q.pop();
+			k--;
+		}
+
+		return ret;
+	}
+};
+
+
+class Solution {
+public:
+	int findKthLargest(vector<int>& nums, int k) {
+
+		std::priority_queue<int, vector<int>, greater<int>> q;
+
+		for (int n : nums)
+		{
+			q.push(n);
+
+			if (k < q.size())
+			{
+				q.pop();
+			}
+		}
+
+		return q.top();
+	}
+};
