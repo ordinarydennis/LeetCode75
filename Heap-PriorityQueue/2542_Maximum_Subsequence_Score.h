@@ -176,3 +176,37 @@ public:
 		return ret;
 	}
 };
+
+
+class Solution {
+
+
+	void dfs(int index, int k, int sum, int min, vector<int>& nums1, vector<int>& nums2)
+	{
+		if (0 == k)
+		{
+			ret = max(ret, sum * min);
+			return;
+		}
+
+		if (nums1.size() <= index)
+		{
+			return;
+		}
+
+		for (int i = index; i < nums1.size() - k + 1; i++)
+		{
+			dfs(i + 1, k - 1, nums1[i] + sum, std::min(nums2[i], min), nums1, nums2);
+		}
+	}
+
+	int ret = 0;
+
+public:
+	long long maxScore(vector<int>& nums1, vector<int>& nums2, int k) {
+
+		dfs(0, k, 0, INT_MAX, nums1, nums2);
+
+		return ret;
+	}
+};
