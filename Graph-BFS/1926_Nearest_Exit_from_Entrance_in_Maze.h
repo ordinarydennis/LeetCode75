@@ -258,3 +258,59 @@ public:
 		return -1;
 	}
 };
+
+class Solution {
+public:
+	int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
+
+		queue<pair<int, vector<int>>> q;
+
+		q.push({ 0, entrance });
+
+		maze[entrance[0]][entrance[1]] = '+';
+
+		vector<vector<int>> dir = {
+			{ -1, 0 },
+			{ 1, 0 },
+			{ 0, -1 },
+			{ 0, 1 },
+		};
+
+
+		while (q.size())
+		{
+			auto info = q.front();
+			auto pos = info.second;
+
+			q.pop();
+
+			for (auto p : dir)
+			{
+				int y = pos[0] + p[0];
+				int x = pos[1] + p[1];
+
+				if (y < 0 || x < 0 || maze.size() == y || maze[0].size() == x)
+					continue;
+
+				if ('+' == maze[y][x])
+					continue;
+
+				if ('.' == maze[y][x])
+				{
+					if (0 == y || 0 == x || maze.size() - 1 == y || maze[0].size() - 1 == x)
+					{
+						return info.first + 1;
+					}
+
+					q.push( pair<int, vector<int>> { info.first + 1, { y, x } } );
+
+					maze[y][x] = 'x';
+				}
+			}
+		}
+
+		return -1;
+
+	}
+};
+
