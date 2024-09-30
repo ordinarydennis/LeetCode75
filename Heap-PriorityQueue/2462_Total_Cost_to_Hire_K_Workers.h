@@ -234,3 +234,171 @@ public:
         return answer;
     }
 };
+
+
+//fail
+class Solution {
+public:
+	long long totalCost(vector<int>& costs, int k, int candidates) {
+
+        priority_queue<int, vector<int>, greater<int>> q1;
+        priority_queue<int, vector<int>, greater<int>> q2;
+
+        int indexLeft = 0;
+        int indexRight = costs.size() - 1;
+
+
+        for (; indexLeft < candidates && indexLeft < costs.size(); indexLeft++)
+        {
+            q1.push(costs[indexLeft]);
+        }
+
+		for (; indexRight >= max(candidates, n - candidates) && indexLeft <= indexRight; indexRight--) {
+			q2.push(costs[indexRight]);
+		}
+
+        int ret = 0;
+
+        while (0 < k)
+        {
+
+            if (q1.size() && q2.size())
+            {
+                if (q1.top() <= q2.top())
+                {
+					ret += q1.top();
+					q1.pop();
+
+					if (indexLeft < costs.size() && indexLeft <= indexRight)
+					{
+						q1.push(costs[indexLeft]);
+                        indexLeft++;
+					}
+                }
+                else
+                {
+					ret += q2.top();
+					q2.pop();
+
+					if (0 <= indexRight && indexLeft < indexRight)
+					{
+						q2.push(costs[indexRight]);
+                        indexRight--;
+					}
+                }
+
+            }
+            else if (q1.size())
+            {
+                ret += q1.top();
+                q1.pop();
+
+                if (indexLeft < costs.size() && indexLeft < indexRight)
+                {
+                    q1.push(costs[indexLeft]);
+                    indexLeft++;
+                }
+            }
+            else if (q2.size())
+            {
+				ret += q2.top();
+				q2.pop();
+
+				if (0 <= indexRight && indexLeft < indexRight)
+				{
+					q2.push(costs[indexRight]);
+					indexRight--;
+				}
+            }
+
+            k--;
+        }
+
+        return ret;
+	}
+};
+
+
+//accepted
+class Solution {
+public:
+	long long totalCost(vector<int>& costs, int k, int candidates) {
+
+		priority_queue<int, vector<int>, greater<int>> q1;  // 최소 힙
+		priority_queue<int, vector<int>, greater<int>> q2;  // 최소 힙
+
+		int n = costs.size();
+		int indexLeft = 0;
+		int indexRight = n - 1;
+
+		// 왼쪽에서 후보자 추가
+		for (; indexLeft < candidates && indexLeft < n; indexLeft++) {
+			q1.push(costs[indexLeft]);
+		}
+
+		// 오른쪽에서 후보자 추가
+		for (; indexRight >= max(candidates, n - candidates) && indexLeft <= indexRight; indexRight--) {
+			q2.push(costs[indexRight]);
+		}
+
+		long long ret = 0;  // 결과값을 long long 타입으로 설정
+
+		// k번 반복
+		while (k > 0) 
+        {
+			// q1과 q2 모두 값이 있는 경우, 최소값을 비교하여 더 작은 값을 선택
+			if (!q1.empty() && !q2.empty())
+            {
+				if (q1.top() <= q2.top())
+                {
+					ret += q1.top();
+					q1.pop();
+
+					if (indexLeft <= indexRight)
+                    {
+						q1.push(costs[indexLeft]);
+						indexLeft++;
+					}
+				}
+				else
+                {
+					ret += q2.top();
+					q2.pop();
+
+					if (indexLeft <= indexRight)
+                    {
+						q2.push(costs[indexRight]);
+						indexRight--;
+					}
+				}
+
+			}
+			// q1만 남아 있는 경우
+			else if (!q1.empty())
+            {
+				ret += q1.top();
+				q1.pop();
+
+				if (indexLeft <= indexRight) {
+					q1.push(costs[indexLeft]);
+					indexLeft++;
+				}
+			}
+			// q2만 남아 있는 경우
+			else if (!q2.empty()) {
+				ret += q2.top();
+				q2.pop();
+
+				if (indexLeft <= indexRight)
+                {
+					q2.push(costs[indexRight]);
+					indexRight--;
+				}
+			}
+
+			k--;
+		}
+
+		return ret;
+	}
+};
