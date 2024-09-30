@@ -61,3 +61,84 @@ public:
 
 	}
 };
+
+
+
+
+class Solution {
+
+	void dfs(int index, vector<vector<int>>& rooms, vector<bool>& visit)
+	{
+		if (visit[index])
+			return;
+
+		visit[index] = true;
+
+		auto keys = rooms[index];
+
+		for (int i = 0; i < keys.size(); i++)
+		{
+			int key = keys[i];
+
+			if (index == key)
+			{
+				continue;
+			}
+
+			dfs(key, rooms, visit);
+		}
+	}
+
+public:
+	bool canVisitAllRooms(vector<vector<int>>& rooms) {
+
+		vector<bool> visit(rooms.size());
+
+		dfs(0, rooms, visit);
+
+		return visit.end() == find(visit.begin(), visit.end(), false);
+	}
+};
+
+
+
+class Solution {
+public:
+	bool canVisitAllRooms(vector<vector<int>>& rooms) {
+
+		stack<int> st;
+
+		for (int i = 0; i < rooms[0].size(); i++)
+		{
+			st.push(rooms[0][i]);
+		}
+
+		vector<bool> visit(rooms.size());
+
+		visit[0] = true;
+
+		while (!st.empty())
+		{
+			int key = st.top();
+
+			st.pop();
+
+			if (visit[key])
+			{
+				continue;
+			}
+
+			visit[key] = true;
+
+			for (int i = 0; i < rooms[key].size(); i++)
+			{
+				if (visit[rooms[key][i]] || key == rooms[key][i])
+					continue;
+
+				st.push(rooms[key][i]);
+			}
+		}
+
+		return visit.end() == find(visit.begin(), visit.end(), false);
+	}
+};
