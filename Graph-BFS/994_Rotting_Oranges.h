@@ -165,3 +165,84 @@ public:
 		return 0 < freshOrangeCount ? -1 : ret - 1;
 	}
 };
+
+
+class Solution {
+public:
+	int orangesRotting(vector<vector<int>>& grid) {
+
+		queue<vector<int>> q;
+
+		int totalFCount = 0;
+
+		int yMax = grid.size();
+		int xMax = grid[0].size();
+
+		for (int y = 0; y < yMax; y++)
+		{
+			for (int x = 0; x < xMax; x++)
+			{
+				if (2 == grid[y][x])
+				{
+					q.push(vector<int>{ y, x, 0 });
+				}
+				else if (1 == grid[y][x])
+				{
+					totalFCount++;
+				}
+			}
+		}
+
+		vector<vector<int>> dir = {
+			{ -1, 0 },
+			{ 1,  0 },
+			{ 0, -1 },
+			{ 0,  1 },
+		};
+
+
+		while (!q.empty())
+		{
+			auto s = q.size();
+
+			for (int i = 0; i < s; i++)
+			{
+				auto info = q.front();
+
+				q.pop();
+
+				int y = info[0];
+				int x = info[1];
+				int m = info[2];
+
+				for (auto d : dir)
+				{
+					int y2 = d[0];
+					int x2 = d[1];
+
+					int cY = y + y2;
+					int cX = x + x2;
+
+					if (cY < 0 || cX < 0 || xMax <= cX || yMax <= cY)
+					{
+						continue;
+					}
+
+					if (1 == grid[cY][cX])
+					{
+						grid[cY][cX] = 2;
+						totalFCount--;
+						q.push(vector<int>{ cY, cX, m + 1 });
+
+						if (0 == totalFCount)
+						{
+							return m + 1;
+						}
+					}
+				}
+			}
+		}
+
+		return  (0 < totalFCount) ? -1 : 0;
+	}
+};
