@@ -176,3 +176,50 @@ public:
 		return ret;
 	}
 };
+
+class Solution {
+
+
+	void dfs(int node, unordered_map<int, unordered_map<int, int>>& mm, vector<bool>& v)
+	{
+		if (v[node])
+		{
+			return;
+		}
+
+		v[node] = true;
+
+		auto ne = mm[node];
+
+		for (auto& [n, d] : ne)
+		{
+			if (!v[n])
+			{
+				ret += d;
+				dfs(n, mm, v);
+			}
+		}
+	}
+
+	int ret = 0;
+
+
+public:
+	int minReorder(int n, vector<vector<int>>& connections) {
+
+		unordered_map<int, unordered_map<int, int>> mm;
+
+		for (auto connect : connections)
+		{
+			mm[connect[0]][connect[1]] = 1;
+			mm[connect[1]][connect[0]] = 0;
+		}
+
+		vector<bool> v(n);
+
+		dfs(0, mm, v);
+
+		return ret;
+	}
+};
+
