@@ -166,3 +166,124 @@ public:
 		return ret;
 	}
 };
+
+class Solution {
+
+	void dfs(int index, unordered_map<int, vector<int>>& m, int& count)
+	{
+		if (visit[index])
+		{
+			return;
+		}
+
+		visit[index] = true;
+
+		count++;
+
+		auto ns = m[index];
+
+		for (auto n : ns)
+		{
+			dfs(n, m, count);
+		}
+	}
+
+	int ret = 0;
+
+	vector<bool> visit;
+
+public:
+	int findCircleNum(vector<vector<int>>& isConnected) {
+
+		unordered_map<int, vector<int>> m;
+
+		visit.resize(isConnected.size());
+
+		for (int y = 0; y < isConnected.size(); y++)
+		{
+			for (int x = 0; x < isConnected[0].size(); x++)
+			{
+				if (isConnected[y][x])
+				{
+					m[y].push_back(x);
+				}
+			}
+		}
+
+		for (int i = 0; i < isConnected.size(); i++)
+		{
+			int count = 0;
+			dfs(i, m, count);
+			if (count)
+				ret++;
+		}
+
+		return ret;
+	}
+};
+
+
+class Solution {
+public:
+	void dfs(int node, vector<vector<int>>& isConnected, vector<bool>& visit) {
+		visit[node] = true;
+		for (int i = 0; i < isConnected.size(); i++) {
+			if (isConnected[node][i] && !visit[i]) {
+				dfs(i, isConnected, visit);
+			}
+		}
+	}
+
+	int findCircleNum(vector<vector<int>>& isConnected) {
+		int n = isConnected.size();
+		int numberOfComponents = 0;
+		vector<bool> visit(n);
+
+		for (int i = 0; i < n; i++) {
+			if (!visit[i]) {
+				numberOfComponents++;
+				dfs(i, isConnected, visit);
+			}
+		}
+
+		return numberOfComponents;
+	}
+};
+
+class Solution {
+
+	void dfs(int index, vector<vector<int>>& isConnected, vector<bool>& visit)
+	{
+		visit[index] = true;
+
+		auto ns = isConnected[index];
+
+		for (int i = 0; i < ns.size(); i++)
+		{
+			if (ns[i] && !visit[i])
+			{
+				dfs(i, isConnected, visit);
+			}
+		}
+	}
+
+
+public:
+	int findCircleNum(vector<vector<int>>& isConnected) {
+
+		int ret = 0;
+
+		vector<bool> visit(isConnected.size());
+
+		for (int i = 0; i < isConnected.size(); i++)
+		{
+			if (!visit[i])
+			{
+				ret++;
+				dfs(i, isConnected, visit);
+			}
+		}
+
+		return ret;
+	}
+};
