@@ -248,3 +248,68 @@ public:
 		return root;
 	}
 };
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+	TreeNode* deleteNode(TreeNode* root, int key) {
+
+		if (!root)
+		{
+			return nullptr;
+		}
+
+		if (root->val == key)
+		{
+			if (!root->left && !root->right)
+			{
+				delete root;
+				return nullptr;
+			}
+			else if (root->right)
+			{
+				auto l = root->right;
+				while (l->left)
+				{
+					l = l->left;
+				}
+				root->val = l->val;
+				root->right = deleteNode(root->right, l->val);
+			}
+			else if (root->left)
+			{
+				auto r = root->left;
+				while (r->right)
+				{
+					r = r->right;
+				}
+				root->val = r->val;
+				root->left = deleteNode(root->left, r->val);
+			}	
+		}
+		else
+		{
+			if (root->val < key)
+			{
+				root->right = deleteNode(root->right, key);
+			}
+			else
+			{
+				root->left = deleteNode(root->left, key);
+			}
+		}
+
+		return root;
+	}
+};
