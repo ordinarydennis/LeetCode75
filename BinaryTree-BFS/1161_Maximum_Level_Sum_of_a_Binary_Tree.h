@@ -281,3 +281,52 @@ public:
 		return ret;
 	}
 };
+
+
+class Solution {
+
+	void dfs(int level, TreeNode* node, unordered_map<int, int>& m)
+	{
+		m[level] += node->val;
+
+		if (node->left)
+		{
+			dfs(level + 1 , node->left, m);
+		}
+
+		if (node->right)
+		{
+			dfs(level + 1, node->right, m);
+		}
+	}
+
+
+
+public:
+	int maxLevelSum(TreeNode* root) {
+
+		map<int, int> m;
+
+		dfs(1, root, m);
+
+		int max = INT_MIN;
+
+		int ret = 0;
+
+		for (auto& [level, sum] : m)
+		{
+			if (max < sum)
+			{
+				max = sum;
+				ret = level;
+			}
+			else if (max == sum && level < ret)
+			{
+				max = sum;
+				ret = level;
+			}
+		}
+
+		return ret;
+	}
+};
