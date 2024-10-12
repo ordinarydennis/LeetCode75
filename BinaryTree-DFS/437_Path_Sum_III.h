@@ -186,3 +186,78 @@ public:
 		return ret;
 	}
 };
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+
+
+	void dfs(TreeNode* node, long long sum, int targetSum)
+	{
+		if (!node)
+			return;
+
+		long long curSum = node->val + sum;
+
+		if (curSum == targetSum)
+			ret++;
+		
+		ret += m[curSum - targetSum];
+
+		m[curSum]++;
+
+		if (node->left)
+		{
+			dfs(node->left, curSum, targetSum);
+		}
+
+		if (node->right)
+		{
+			dfs(node->right, curSum, targetSum);
+		}
+
+		m[curSum]--;
+
+	}
+
+	unordered_map<long long, int> m;
+
+	int ret = 0;
+
+public:
+	int pathSum(TreeNode* root, int targetSum) {
+
+		dfs(root, 0, targetSum);
+
+		return ret;
+	}
+};
+
+//ex) 
+// target : 4
+// node : 2 -> 2 -> -2 -> 2 -> 2
+
+//hash table
+//sum | count
+//2 | 1, 2
+//4 | 1, 2
+//6 | 1
+
+//6 - 4(target) : 2
+//2, -2, 2, 2 : 4
+//2, 2 : 4
+//따라서 마지막 노드 2지점에서 h[6 - 4] -> h[2](h[currSum - k]) 는 2개
+//There are two cases: one where the total sum equals the target, 
+// and another where the sum of all sub-nodes equals the target
+
+
