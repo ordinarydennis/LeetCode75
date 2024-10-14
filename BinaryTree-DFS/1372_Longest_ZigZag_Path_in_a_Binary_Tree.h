@@ -132,3 +132,111 @@ public:
 		return ret;
 	}
 };
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+
+	void dfs(TreeNode* node, bool isGoLeft, int count)
+	{
+		if (!node)
+		{
+			return;
+		}
+
+		ret = std::max(count, ret);
+
+		if (isGoLeft)
+		{
+			if (node->left)
+			{
+				dfs(node->left, false, count + 1);
+			}
+			
+			if(node->right)
+			{
+				dfs(node->right, true, 1);
+			}
+		}
+		else
+		{
+			if (node->right)
+			{
+				dfs(node->right, true, count + 1);
+			}
+
+			if (node->left)
+			{
+				dfs(node->left, false, 1);
+			}
+		}
+	}
+
+
+	int ret = 0;
+
+
+public:
+	int longestZigZag(TreeNode* root) {
+
+		dfs(root->left, false, 1);
+		dfs(root->right, true, 1);
+
+		return ret;
+	}
+};
+
+
+class Solution {
+
+	void dfs(TreeNode* node, bool isGoLeft, int count)
+	{
+		ret = std::max(count, ret);
+
+		if (isGoLeft)
+		{
+			if (node->left)
+			{
+				dfs(node->left, false, count + 1);
+			}
+
+			if (node->right)
+			{
+				dfs(node->right, true, 1);
+			}
+		}
+		else
+		{
+			if (node->right)
+			{
+				dfs(node->right, true, count + 1);
+			}
+
+			if (node->left)
+			{
+				dfs(node->left, false, 1);
+			}
+		}
+	}
+
+
+	int ret = 0;
+
+
+public:
+	int longestZigZag(TreeNode* root) {
+
+		dfs(root, false, 0);
+		dfs(root, true, 0);
+
+		return ret;
+	}
+};
