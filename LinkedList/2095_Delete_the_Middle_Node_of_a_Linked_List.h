@@ -99,3 +99,40 @@ public:
 		return head;
 	}
 };
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+	ListNode* deleteMiddle(ListNode* head) {
+
+		if (!head->next)
+			return nullptr;
+		
+
+		ListNode* node1 = head;
+		ListNode* node2 = head;
+
+		while (node2 && node2->next)
+		{
+			pre = node1;
+			node1 = node1->next;
+			node2 = node2->next->next;
+		}
+
+		if (pre->next)
+		{
+			pre->next = pre->next->next;
+		}
+
+		return head;
+	}
+};
