@@ -208,3 +208,74 @@ public:
 		return remainingAsteroids;
 	}
 };
+
+
+class Solution {
+public:
+	vector<int> asteroidCollision(vector<int>& asteroids) {
+
+		stack<int> st;
+
+		for (int i = 0; i < asteroids.size(); i++)
+		{
+			//비어있으면 넣는다.
+			if (st.empty())
+			{
+				st.push(asteroids[i]);
+				continue;
+			}
+
+			//다른 부호라면
+			while (!st.empty())
+			{
+				//같은 부호인지 본다.
+				if (0 < st.top() && 0 < asteroids[i] || 0 > st.top() && 0 > asteroids[i])
+				{
+					st.push(asteroids[i]);
+					break;
+				}
+
+				if (0 > st.top() && 0 < asteroids[i])
+				{
+					st.push(asteroids[i]);
+					break;
+				}
+
+				int n = abs(asteroids[i]);
+				int stn = abs(st.top());
+
+				if (n > stn)
+				{
+					st.pop();
+					if (st.empty())
+					{
+						st.push(asteroids[i]);
+						break;
+					}
+				}
+				else if (n == stn)
+				{
+					st.pop();
+					break;
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+
+
+		vector<int> ret;
+		
+		while(!st.empty())
+		{ 
+			ret.push_back(st.top());	
+			st.pop();
+		}
+
+		reverse(ret.begin(), ret.end());
+
+		return ret;
+	}
+};
