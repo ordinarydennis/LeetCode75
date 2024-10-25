@@ -126,3 +126,94 @@ public:
 		return ret;
 	}
 };
+
+
+
+class Solution {
+public:
+	string decodeString(string s) {
+
+		std::stack<int> st1;
+		std::stack<string> st2;
+
+		int openCount = 0;
+
+		string cur;
+
+		string ret;
+
+		string curInt;
+
+		for (int i = 0; i < s.size(); i++)
+		{
+			char c = s[i];
+
+			if ('0' <= c && c <= '9')
+			{
+				curInt += c;
+			}
+			else if ('a' <= c && c <= 'z')
+			{
+				cur += c;
+				if (curInt.size())
+				{
+					st1.push(stoi(curInt));
+					curInt.clear();
+				}
+				
+			}
+			else if ('[' == c)
+			{
+				if (cur.size())
+				{
+					st2.push(std::move(cur));
+				}
+
+				if (curInt.size())
+				{
+					st1.push(stoi(curInt));
+					curInt.clear();
+				}
+
+				openCount++;
+			}
+			else if (']' == c)
+			{
+				int n = st1.top();
+				st1.pop();
+
+				string s;
+
+				for (int i = 0; i < n; i++)
+				{
+					s += cur;
+				}
+
+				openCount--;
+
+				if (st2.size())
+				{
+					auto pre = st2.top();
+					st2.pop();
+
+					cur = pre + s;
+				}
+				else
+				{
+					ret += s;
+					cur.clear();
+				}
+			
+			}
+
+		}
+
+
+		if (cur.size())
+		{
+			ret += cur;
+		}
+
+		return ret;
+	}
+};
