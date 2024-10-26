@@ -279,3 +279,69 @@ public:
 		return ret;
 	}
 };
+
+
+class Solution {
+public:
+	vector<int> asteroidCollision(vector<int>& asteroids) {
+
+		stack<int> st;
+
+		for (int i = 0; i < asteroids.size(); i++)
+		{
+			int n = asteroids[i];
+
+			if (st.empty())
+			{
+				st.push(n);
+				continue;
+			}
+			
+			while (!st.empty())
+			{
+				int t = st.top();
+
+				if (t <= 0 && n <= 0 || 0 < t && 0 < n)
+				{
+					st.push(n);
+					break;
+				}
+
+				if (0 < n && t < 0)
+				{
+					st.push(n);
+					break;
+				}
+
+				if (abs(n) < abs(t))
+				{
+					break;
+				}
+				else if (abs(t) < abs(n))
+				{
+					st.pop();
+					if (st.empty())
+					{
+						st.push(n);
+						break;
+					}
+				}
+				else
+				{
+					st.pop();
+					break;
+				}
+			}			
+		}
+
+		vector<int> ret(st.size());
+
+		for (int i = st.size() - 1; 0 <= i; i--)
+		{
+			ret[i] = st.top();
+			st.pop();
+		}
+
+		return ret;
+	}
+};

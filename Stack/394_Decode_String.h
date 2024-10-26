@@ -217,3 +217,68 @@ public:
 		return ret;
 	}
 };
+
+
+
+
+
+
+
+class Solution {
+public:
+	string decodeString(string s) {
+
+		stack<char> st;
+
+		for (int i = 0; i < s.size(); i++)
+		{
+			char c = s[i];
+			if (']' == c)
+			{
+				string str;
+				
+				while ('[' != st.top())
+				{
+					str = st.top() + str;
+					st.pop();
+				}
+
+				st.pop();
+
+				string n;
+
+				while (!st.empty() && isdigit(st.top()))
+				{
+					n = st.top() + n;
+					st.pop();
+				}
+
+				string str2;
+
+				for (int a = 0; a < stoi(n); a++)
+				{
+					str2 += str;
+				}
+
+				for (char c : str2)
+				{
+					st.push(c);
+				}
+			}
+			else
+			{
+				st.push(c);
+			}
+		}
+
+		string ret;
+
+		while (!st.empty())
+		{
+			ret = st.top() + ret;
+			st.pop();
+		}
+
+		return ret;
+	}
+};
