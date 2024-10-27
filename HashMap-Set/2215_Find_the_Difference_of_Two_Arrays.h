@@ -68,3 +68,45 @@ public:
 		return ret;
 	}
 };
+
+class Solution {
+public:
+	vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {
+
+		unordered_set<int> set1;
+		unordered_set<int> set2;
+
+		for (int n : nums1)
+		{
+			set1.insert(n);
+		}
+
+		for (int n : nums2)
+		{
+			set2.insert(n);
+		}
+
+		vector<vector<int>> ret(2);
+
+		for (int n : nums2)
+		{
+			if (set1.count(n))
+			{
+				set1.erase(n);
+			}
+		}
+
+		for (int n : nums1)
+		{
+			if (set2.count(n))
+			{
+				set2.erase(n);
+			}
+		}
+
+		vector<int> ret1(set1.begin(), set1.end());
+		vector<int> ret2(set2.begin(), set2.end());
+		
+		return vector<vector<int>> { ret1, ret2 };
+	}
+};
