@@ -109,3 +109,99 @@ public:
 		return m1 == m2;
 	}
 };
+
+class Solution {
+public:
+	bool closeStrings(string word1, string word2) {
+
+		set<char> s1;
+		set<char> s2;
+
+		map<char, int> o1;
+		map<char, int> o2;
+
+		for (auto c : word1)
+		{
+			s1.insert(c);
+			o1[c]++;
+		}
+
+		for (auto c : word2)
+		{
+			s2.insert(c);
+			o2[c]++;
+		}
+
+		if (s1 != s2)
+		{
+			return false;
+		}
+
+
+		vector<int> v1;
+		vector<int> v2;
+		
+		for (auto& [c, count] : o1)
+		{
+			v1.push_back(count);
+		}
+
+		for (auto& [c, count] : o2)
+		{
+			v2.push_back(count);
+		}
+
+		sort(v1.begin(), v1.end());
+		sort(v2.begin(), v2.end());
+
+		return v1 == v2;
+
+	}
+};
+
+
+class Solution {
+public:
+	bool closeStrings(string word1, string word2) {
+
+		unordered_map<char, int> o1;
+		unordered_map<char, int> o2;
+
+		for (auto c : word1)
+		{
+			o1[c]++;
+		}
+
+		for (auto c : word2)
+		{
+			if (0 == o1.count(c))
+				return false;
+
+			o2[c]++;
+		}
+
+		if (o1.size() != o2.size())
+		{
+			return false;
+		}
+
+		vector<int> v1;
+		vector<int> v2;
+
+		for (auto& [c, count] : o1)
+		{
+			v1.push_back(count);
+		}
+
+		for (auto& [c, count] : o2)
+		{
+			v2.push_back(count);
+		}
+
+		sort(v1.begin(), v1.end());
+		sort(v2.begin(), v2.end());
+
+		return v1 == v2;
+
+	}
+};
