@@ -53,3 +53,39 @@ public:
 		return ret;
 	}
 };
+
+//brute force
+class Solution {
+public:
+	int equalPairs(vector<vector<int>>& grid) {
+
+		int maxY = grid.size();
+		int maxX = grid[0].size();
+
+		int ret = 0;
+
+		for (int y = 0; y < maxY; y++)
+		{
+			vector<int> row;
+			
+			
+			for (int x = 0; x < maxX; x++)
+			{
+				row.push_back(grid[y][x]);
+			}
+
+
+			for (int j = 0; j < maxX; j++)
+			{
+				vector<int> column;
+				for (int i = 0; i < maxY; i++)
+					column.push_back(grid[i][j]);
+
+				if (row == column)
+					ret++;
+			}
+		}
+
+		return ret;
+	}
+};
