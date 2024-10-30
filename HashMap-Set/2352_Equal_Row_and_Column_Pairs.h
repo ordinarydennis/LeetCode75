@@ -89,3 +89,44 @@ public:
 		return ret;
 	}
 };
+
+
+class Solution {
+public:
+	int equalPairs(vector<vector<int>>& grid) {
+
+
+		unordered_map<string, int> m;
+
+		for (int y = 0; y < grid.size(); y++)
+		{
+			string s;
+
+			for (int x = 0; x < grid[0].size(); x++)
+			{
+				s += to_string(grid[y][x]) + ",";
+			}
+
+			m[s]++;
+		}
+
+		int ret = 0;
+
+		for (int x = 0; x < grid[0].size(); x++)
+		{
+			string s;
+
+			for (int y = 0; y < grid.size(); y++)
+			{
+				s += to_string(grid[y][x]) + ",";
+			}
+
+			if (m.count(s))
+			{
+				ret += m[s];
+			}
+		}
+
+		return ret;
+	}
+};
