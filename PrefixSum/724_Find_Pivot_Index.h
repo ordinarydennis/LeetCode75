@@ -94,3 +94,63 @@ public:
 		return -1;
 	}
 };
+
+class Solution {
+public:
+	int pivotIndex(vector<int>& nums) {
+
+		vector<int> fix(nums.size());
+
+		fix[0] = nums[0];
+
+		for (int i = 1; i < fix.size(); i++)
+		{
+			fix[i] = nums[i] + fix[i - 1];
+		}
+
+		for (int i = 0; i < nums.size(); i++)
+		{
+			// right
+			int r = fix[nums.size() - 1] - fix[i];
+
+			int l = 0;
+
+			if (0 < i)
+			{
+				l = fix[i - 1];
+			}
+			
+			if (r == l)
+			{
+				return i;
+			}
+		}
+
+		return -1;
+	}
+};
+
+
+class Solution {
+public:
+	int pivotIndex(vector<int>& nums) {
+
+		int sum = accumulate(nums.begin(), nums.end(), 0);
+
+		int leftSum = 0;
+
+		for (int i = 0; i < nums.size(); i++)
+		{
+			int rightSum = sum - leftSum - nums[i];
+
+			if(leftSum == rightSum)
+			{
+				return i;
+			}
+
+			leftSum += nums[i];
+		}
+
+		return -1;
+	}
+};
