@@ -69,3 +69,63 @@ public:
 		return max;
 	}
 };
+
+class Solution {
+public:
+	int maxVowels(string s, int k) {
+
+		int ret = 0;
+
+		int count = 0;
+
+		vector<char> v = {'a', 'e', 'i', 'o', 'u'};
+
+		for (int i = 0; i < s.size(); i++)
+		{
+			if (v.end() != std::find(v.begin(), v.end(), s[i]))
+			{
+				count++;
+			}
+			
+			if (k <= i - 1 && v.end() != std::find(v.begin(), v.end(), s[i - k]))
+			{
+				count--;
+			}
+
+			ret = max(ret, count);
+		}
+
+		return ret;
+	}
+};
+
+
+
+class Solution {
+public:
+	int maxVowels(string s, int k) {
+
+		int ret = 0;
+
+		int count = 0;
+
+		vector<char> v = { 'a', 'e', 'i', 'o', 'u' };
+
+		for (int i = 0; i < s.size(); i++)
+		{
+			if (v.end() != std::find(v.begin(), v.end(), s[i]))
+			{
+				count++;
+			}
+
+			if (k <= i  && v.end() != std::find(v.begin(), v.end(), s[i - k]))
+			{
+				count--;
+			}
+
+			ret = max(ret, count);
+		}
+
+		return ret;
+	}
+};
