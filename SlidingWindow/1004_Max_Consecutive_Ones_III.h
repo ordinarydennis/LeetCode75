@@ -92,3 +92,39 @@ public:
 //			0, 0, 0, 0, 0				-> k = -3
 // k가 음수가 되면 윈도우의 크기(right - left)는 계속 유지가 된다. 
 // 윈도우의 크기 : 우리가 찾는 최대 길이가 된다.
+
+
+
+class Solution {
+public:
+	int longestOnes(vector<int>& nums, int k) {
+
+		int ret = 0;
+
+		int left = 0;
+
+		for (int i = 0; i < nums.size(); i++)
+		{
+			if (0 == nums[i])
+			{
+				if (0 < k)
+				{
+					k--;
+				}
+				else
+				{
+					while (1 == nums[left])
+					{
+						left++;
+					}
+
+					left++;
+				}
+			}
+
+			ret = max(ret, i - left + 1);
+		}
+
+		return ret;
+	}
+};
