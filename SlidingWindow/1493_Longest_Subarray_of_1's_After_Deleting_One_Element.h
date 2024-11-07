@@ -126,3 +126,39 @@ public:
 		return max - 1;
 	}
 };
+
+
+class Solution {
+public:
+	int longestSubarray(vector<int>& nums) {
+
+		int zeroCount = 0;
+		
+		int left = 0;
+
+		int ret = 0;
+
+		for (int i = 0; i < nums.size(); i++)
+		{
+			if (0 == nums[i])
+			{
+				if (0 == zeroCount)
+				{
+					zeroCount++;
+				}
+				else
+				{
+					while (1 == nums[left])
+					{
+						left++;
+					}
+					left++;
+				}
+			}
+
+			ret = std::max(ret, i - left);
+		}
+
+		return ret;
+	}
+};
