@@ -75,3 +75,23 @@ public:
 		}
 	}
 };
+
+
+class Solution {
+public:
+	void moveZeroes(vector<int>& nums) {
+
+		int z = 0;
+
+		while (z < nums.size() && 0 != nums[z]) z++;
+
+		for(int i = 0; i < nums.size(); i++)
+		{
+			if (z < i && 0 != nums[i])
+			{
+				std::swap(nums[z], nums[i]);
+				while (0 != nums[z]) z++;
+			}
+		}
+	}
+};
