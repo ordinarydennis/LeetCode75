@@ -83,3 +83,35 @@ public:
 		return count;
 	}
 };
+
+
+
+
+class Solution {
+public:
+	int maxOperations(vector<int>& nums, int k) {
+
+		unordered_map<int, int> m;
+
+		for (int n : nums)
+			m[n]++;
+
+		int ret = 0;
+
+		for (int i = 0; i < nums.size(); i++)
+		{
+			if (m[k - nums[i]] <= 0 || m[nums[i]] <= 0)
+				continue;
+
+			if (k - nums[i] == nums[i] && m[nums[i]] < 2)
+				continue;
+
+			m[k - nums[i]]--;
+			m[nums[i]]--;
+
+			ret++;
+		}
+
+		return ret;
+	}
+};
