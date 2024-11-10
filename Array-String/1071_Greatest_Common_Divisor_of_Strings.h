@@ -158,3 +158,59 @@ public:
 		return "";
 	}
 };
+
+class Solution {
+
+
+	string check(const string& base, int count)
+	{
+		string ret;
+
+		for (int i = 0; i < count; i++)
+		{
+			ret += base;
+		}
+		
+		return ret;
+	}
+
+
+public:
+	string gcdOfStrings(string str1, string str2) {
+
+		int l = std::min(str1.size(), str2.size());
+
+		while (0 < l)
+		{
+			if (str1.size() % l != 0)
+			{
+				l--;
+				continue;
+			}
+
+			string base = str1.substr(0, l);
+
+			if (str1 == check(base, str1.size() / l) &&
+				str2 == check(base, str2.size() / l)
+				)
+			{
+				return str1.substr(0, l);
+			}
+
+			l--;
+		}
+		
+		return "";
+	}
+};
+
+class Solution {
+public:
+	string gcdOfStrings(string str1, string str2) {
+
+		if (str1 + str2 != str2 + str1)
+			return "";
+
+		return str1.substr(0, gcd(str1.size(), str2.size()));	
+	}
+};
