@@ -131,3 +131,43 @@ public:
 		return count >= n;
 	}
 };
+
+
+class Solution {
+public:
+	bool canPlaceFlowers(vector<int>& flowerbed, int n) {
+
+		if (0 == n)
+		{
+			return true;
+		}
+
+		int max = flowerbed.size();
+
+		for (int i = 0 ; i < max; i++)
+		{
+			if (1 == flowerbed[i])
+				continue;
+
+
+			if (0 <= i - 1 && 1 == flowerbed[i - 1])
+			{
+				continue;
+			}
+
+			if (i < max - 1 && 1 == flowerbed[i + 1])
+			{
+				continue;
+			}
+
+			flowerbed[i] = 1;
+			n--;
+			
+			if (0 == n)
+				return true;
+
+		}
+
+		return false;
+	}
+};
