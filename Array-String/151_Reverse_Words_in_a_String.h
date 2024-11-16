@@ -128,3 +128,44 @@ public:
 		return ret;
 	}
 };
+
+
+class Solution {
+public:
+	string reverseWords(string s) {
+
+
+		string str;
+
+		vector<string> list;
+
+		for (int i = 0; i <= s.size(); i++)
+		{
+			if(' ' == s[i] || i == s.size())
+			{
+				if (!str.empty())
+				{
+					list.emplace_back(std::move(str));
+				}
+			}
+			else
+			{
+				str += s[i];
+			}
+		}
+
+
+		string ret;
+
+		for (auto str : list)
+		{
+			ret = str + " " + ret;
+		}
+
+		ret.pop_back();
+
+		return ret;
+
+	}
+};
+
