@@ -205,3 +205,54 @@ public:
 		return ret;
 	}
 };
+
+
+class Solution {
+public:
+	vector<int> productExceptSelf(vector<int>& nums) {
+
+
+		vector<int> ret(nums.size());
+
+		int zeroIndex = -1;
+
+		int totalProduct = 1;
+
+		for (int i = 0; i < nums.size(); i++)
+		{
+			if (0 == nums[i])
+			{
+				if (-1 != zeroIndex)
+				{
+					return ret;
+				}
+
+				zeroIndex = i;
+			}
+			else
+			{
+				totalProduct *= nums[i];
+			}
+		}
+
+		for (int i = 0; i < nums.size(); i++)
+		{
+			if (i == zeroIndex)
+			{
+				ret[i] = totalProduct;
+			}
+			else if(-1 != zeroIndex)
+			{
+				//there is zenoindex but i is not zenoindex
+				continue;
+			}
+			else
+			{
+				//no zenoIndex
+				ret[i] = totalProduct / nums[i];
+			}
+		}
+
+		return ret;
+	}
+};
