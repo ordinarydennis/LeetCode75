@@ -111,3 +111,65 @@ public:
 		return false;
 	}
 };
+
+class Solution {
+public:
+	bool increasingTriplet(vector<int>& nums) {
+
+		int first = nums[0];
+		int second = INT_MIN;
+
+		for (int i = 1; i < nums.size(); i++)
+		{
+			int n = nums[i];
+
+			if (n < first)
+			{
+				first = n;
+			}
+			else if(second < n)
+			{
+				second = n;
+			}
+			else if (second < n)
+			{
+				return true;
+			}
+
+
+		}
+
+		return false;
+	}
+};
+
+
+class Solution {
+public:
+	bool increasingTriplet(vector<int>& nums) {
+
+		int first = nums[0];
+
+		int second = INT_MIN;
+
+		for (int i = 1; i < nums.size(); i++)
+		{
+			int n = nums[i];
+
+			if (n <= first)
+			{
+				first = n;
+			}
+			else if (INT_MIN == second || n < second)
+			{
+				second = n;
+			}
+			else if (second < n)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+};
