@@ -219,3 +219,53 @@ public:
 		return r;
 	}
 };
+
+
+class Solution {
+public:
+	int compress(vector<char>& chars) {
+
+		string s;
+
+		char pre = chars[0];
+		int count = 1;
+
+		for (int i = 1; i <= chars.size(); i++)
+		{
+			if (i == chars.size())
+			{
+				s.push_back(pre);
+				if (1 < count)
+				{
+					s += to_string(count);
+				}
+				break;
+			}
+
+			if (pre == chars[i])
+			{
+				count++;
+			}
+			else
+			{
+				s.push_back(pre);
+				if (1 < count)
+				{
+					s += to_string(count);
+				}
+				pre = chars[i];
+				count = 1;
+			}
+			
+		}
+
+		chars.clear();
+
+		for (int i= 0; i < s.size(); i++)
+		{
+			chars.push_back(s[i]);
+		}
+
+		return s.size();
+	}
+};
